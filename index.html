@@ -1,79 +1,1296 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Razorpay Payment</title>
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&family=Ubuntu:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="flex items-center justify-center h-screen bg-gray-100">
+  </head>
+  <body>
+    <div class="overflow-hidden">
+      <div class="flex justify-center items-center">
+        <img
+          src="./images/OneclickLogoo 1.png"
+          alt=""
+          class="object-contain h-28"
+        />
+      </div>
+      <!-- HERO SECTION -->
+      <div class="bg-[#f8f6f2]">
+        <div
+          class="flex flex-col md:flex-row justify-center items-center md:px-[20px] p-5"
+        >
+          <div class="md:w-1/2 w-full">
+            <h1 class="lg:text-5xl text-3xl font-semibold text-[#364045]">
+              Become a High-Paid Digital Marketer in Just 90 Days –
+              <span class="text-[#F68D21]"
+                >Work on Real Projects & Get Placed!</span
+              >
+            </h1>
+            <p
+              class="lg:text-xl text-base font-normal text-[#45565F] md:w-2/3 mt-7"
+            >
+              Learn the Skills That Brands & Agencies Are Looking for –<span
+                class="text-[#45565F] md:text-2xl font-semibold"
+              >
+                Even if You Have ZERO Experience!</span
+              >
+            </p>
+            <div
+              class="flex sm:flex-row justify-center md:justify-start gap-4 mb-10 w-full mt-7"
+            >
+              <a href="./payment.html">
+                <button
+                  class="bg-red-500 hover:bg-red-600 w-32 md:w-48 text-sm lg:text-lg text-white font-bold py-3 lg:px-8 rounded-full transition duration-300"
+                >
+                  ENROLL NOW!
+                </button>
+              </a>
+              <button
+                class="border border-orange-400 text-orange-500 hover:bg-orange-50 font-medium py-3 lg:px-8 rounded-full w-32 md:w-48 text-sm lg:text-lg flex justify-center items-center transition duration-300"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5 mr-2"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+                Our Videos
+              </button>
+            </div>
+          </div>
+          <div>
+            <img
+              src="./images/image.png"
+              alt=""
+              class="object-contain lg:w-[500px] lg:h-[570px]"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="md:relative flex justify-center">
+        <div
+          class="bg-white border border-[#F68D21] rounded-md md:absolute xl:-top-20 xl:left-60 lg:-top-16 md:-top-10 md:left-12"
+        >
+          <h1 class="p-3 w-[300px] text-center">
+            "Not Just a Course – A Complete Digital Marketing Career Blueprint
+            That Gets You Hired or Helps You Start Your Own Business!"
+          </h1>
+        </div>
+      </div>
+      <!-- HERO SECTION -->
+      <!-- 4 CARDS -->
+      <div
+        class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-8 lg:mt-20 md:mt-32 mt-5 place-content-center place-items-center w-full px-5"
+      >
+        <div
+          class="flex md:gap-5 gap-3 w-full max-w-[420px] h-auto items-center"
+        >
+          <div
+            class="bg-white rounded-full flex justify-center items-center md:w-16 md:h-16 w-10 h-10"
+          >
+            <img
+              src="./images/ic.png"
+              alt=""
+              class="lg:w-12 lg:h-12 w-6 h-6 object-contain"
+            />
+          </div>
+          <p
+            class="font-primary text-[#3C4B53] font-medium text-[16px] lg:text-[30px] md:text-[20px] leading-[100%]"
+          >
+            Master 15+ High-Income Digital Marketing Skills
+          </p>
+        </div>
 
-    <form id="paymentForm" class="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 class="text-2xl  font-bold mb-4 text-center">Payment Form</h2>
+        <div
+          class="flex md:gap-5 gap-3 w-full max-w-[420px] h-auto items-center"
+        >
+          <div
+            class="bg-white rounded-full flex justify-center items-center md:w-16 md:h-16 w-10 h-10"
+          >
+            <img
+              src="./images/Icon (2).png"
+              alt=""
+              class="lg:w-12 lg:h-12 w-6 h-6 object-contain"
+            />
+          </div>
+          <p
+            class="font-primary text-[#3C4B53] font-medium text-[16px] lg:text-[30px] md:text-[20px] leading-[100%]"
+          >
+            Intern with a Leading Digital Marketing Agency
+          </p>
+        </div>
 
-        <label class="block mb-2">Name:</label>
-        <input type="text" id="name" name="name" required class="w-full p-2 border rounded mb-4">
+        <div
+          class="flex md:gap-5 gap-3 w-full max-w-[413px] h-auto items-center"
+        >
+          <div
+            class="bg-white rounded-full flex justify-center items-center md:w-16 md:h-16 w-10 h-10"
+          >
+            <img
+              src="./images/ic (2).png"
+              alt=""
+              class="lg:w-12 lg:h-12 w-6 h-6 object-contain"
+            />
+          </div>
+          <p
+            class="font-primary text-[#3C4B53] font-medium text-[16px] lg:text-[30px] md:text-[20px] leading-[100%]"
+          >
+            Launch Your Career with 100% Job Assistance
+          </p>
+        </div>
 
-        <label class="block mb-2">Email:</label>
-        <input type="email" id="email" name="email" required class="w-full p-2 border rounded mb-4">
+        <div
+          class="flex md:gap-5 gap-3 w-full max-w-[413px] h-auto items-center"
+        >
+          <div
+            class="bg-white rounded-full flex justify-center items-center md:w-16 md:h-16 w-10 h-10"
+          >
+            <img
+              src="./images/Group.png"
+              alt=""
+              class="lg:w-12 lg:h-12 w-6 h-6 object-contain"
+            />
+          </div>
+          <p
+            class="font-primary text-[#3C4B53] font-medium text-[16px] lg:text-[30px] md:text-[20px] leading-[100%]"
+          >
+            Work on Real Campaigns & Learn What Actually Works!
+          </p>
+        </div>
+      </div>
+      <!-- 4 CARDS -->
 
-        <label class="block mb-2">Phone:</label>
-        <input type="tel" id="phone" name="phone" required class="w-full p-2 border rounded mb-4">
+      <!-- 2 BUTTONS -->
+      <div class="flex justify-center mt-10 animate-bounce">
+        <!-- Button Wrapper -->
+        <a href="./payment.html">
+          <div
+            class="flex rounded-full border-2 border-[#ED2326] overflow-hidden shadow-lg"
+          >
+            <!-- LIMITED SEATS Button -->
+            <button
+              id="limitedSeatsBtn"
+              class="px-6 py-3 text-[#ED2326] text-sm font-bold bg-white transition-all duration-300 w-40"
+            >
+              LIMITED SEATS
+            </button>
 
-        <label class="block mb-2">Amount (Fixed):</label>
-        <input type="text" value="30,000" disabled class="w-full p-2 border rounded mb-4 bg-gray-200">
+            <!-- ENROLL NOW! Button -->
+            <button
+              id="enrollNowBtn"
+              class="px-6 py-3 bg-[#ED2326] rounded-full text-sm text-white font-bold transition-all duration-300 w-40"
+            >
+              ENROLL NOW!
+            </button>
+          </div>
+        </a>
+      </div>
+      <!-- 2 BUTTONS -->
+      <!-- Why One Click Academy? -->
+      <div
+        class="flex flex-col md:flex-row mt-10 w-full gap-10 xl:px-[70px] px-5"
+      >
+        <div class="w-full md:w-1/2 flex flex-col items-center">
+          <h1
+            class="xl:text-[40px] lg:text-3xl text-xl font-bold w-full text-[#364045] text-center"
+          >
+            <span class="text-[#FF7733] block xl:mb-5"
+              >Why One Click Academy?</span
+            >
+            What Makes Us Different?
+          </h1>
 
-        <button type="submit" class="w-full bg-blue-600 text-white p-2 rounded">Proceed to Pay</button>
-    </form>
+          <!-- <div class="lg:mt-7 mt-4">
+            <img
+              src="./images/oneclick.png"
+              alt=""
+              class="w-full max-w-[480px]"
+            />
+          </div> -->
+          <div
+            class="w-full xl:w-[500px] bg-white h-[250px] lg:h-[300px] xl:mt-10 mt-5 border border-[#F68D21] bg-white rounded-[25px] p-4 flex justify-center text-center items-end"
+          >
+            <div class="flex flex-col">
+              <p
+                class="text-[16px] lg:text-[36px] font-medium text-[#45565F] font-secondary md:leading-[10px] lg:leading-[36px]"
+                style="text-shadow: -2px 2px 3px #00000040"
+              >
+                This Isn’t Just a Course –
+              </p>
+              <p
+                class="font-bold text-[16px] lg:text-[36px] text-[#45565F] font-secondary md:leading-[24px] lg:leading-[36px]"
+                style="text-shadow: -2px 2px 3px #00000040"
+              >
+                It’s a Career Accelerator!
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="w-full md:w-1/2 lg:mt-2 flex flex-col gap-7">
+          <p
+            class="text-[12px] md:text-base xl:text-[24px] lg:text-[21px] font-semibold text-[#48545B] leading-[24px] lg:leading-[36.75px]"
+          >
+            ✅ Practical, Hands-On Training – No Fluff, <br />
+            Only Real Execution!
+          </p>
+          <p
+            class="text-[12px] md:text-base xl:text-[24px] lg:text-[21px] font-semibold text-[#48545B] leading-[24px] lg:leading-[36.75px]"
+          >
+            ✅ Work on Live Client Projects & Paid Ad Campaigns
+          </p>
+          <p
+            class="text-[12px] md:text-base xl:text-[24px] lg:text-[21px] font-semibold text-[#48545B] leading-[24px] lg:leading-[36.75px]"
+          >
+            ✅ Learn 15+ High-Demand Skills in Just 90 Days
+          </p>
+          <p
+            class="text-[12px] md:text-base xl:text-[24px] lg:text-[21px] font-semibold text-[#48545B] leading-[24px] lg:leading-[36.75px]"
+          >
+            ✅ 1-on-1 Mentorship & Career Guidance
+          </p>
+          <p
+            class="text-[12px] md:text-base xl:text-[24px] lg:text-[21px] font-semibold text-[#48545B] leading-[24px] lg:leading-[36.75px]"
+          >
+            ✅ 100% Placement Assistance for Job Seekers
+          </p>
+          <p
+            class="text-[12px] md:text-base xl:text-[24px] lg:text-[21px] font-semibold text-[#48545B] leading-[24px] lg:leading-[36.75px]"
+          >
+            ✅ Freelance & Business Training for Entrepreneurs
+          </p>
+        </div>
+      </div>
+      <!-- Why One Click Academy? -->
+      <!-- Cards Section -->
+      <div>
+        <div class="mt-12 lg:w-[1050px] mx-auto px-5">
+          <!-- Heading Section -->
+          <div class="flex justify-center items-center flex-col gap-2">
+            <h1
+              class="font-primary text-center text-[#FF7733] font-bold text-[24px] md:leading-[58.97px] sm:text-[40px] sm:leading-[48px] md:text-[48px]"
+            >
+              Who Is This Program For?
+            </h1>
+            <h2
+              class="font-secondary font-normal text-[12px] md:leading-[39px] text-center text-[#45565F] sm:text-[32px] sm:leading-[30px] md:text-[32px] w-full max-w-[654px] px-4"
+            >
+              No Prior Experience Needed –
+              <span class="font-semibold">We Train You from Scratch!</span>
+            </h2>
+          </div>
 
-    <script>
-        document.getElementById("paymentForm").addEventListener("submit", function(e) {
-            e.preventDefault();
+          <!-- Cards Section -->
+          <div
+            class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:mt-10 mt-5 sm:px-3 md:px-3"
+          >
+            <!-- Card 1 -->
+            <div
+              class="w-full flex flex-col items-center justify-center text-center md:h-[240.96px] border border-[#FF7733] bg-[#FFFF] md:p-5 p-3 h-[180px]"
+            >
+              <div class="flex flex-col md:gap-3 justify-center items-center">
+                <img
+                  src="./images/ic (3).png"
+                  class="md:w-[50.76px] md:h-[58.27px] h-9 w-9 my-3"
+                  alt=""
+                />
+                <h1
+                  class="font-secondary font-bold md:text-[25px] text-sm md:leading-[26px] text-[#45565F]"
+                >
+                  Students & Freshers
+                </h1>
+                <p
+                  class="font-secondary font-normal md:text-[16px] text-[11px] md:leading-[28.53px] leading[10px] text-[#45565F]"
+                >
+                  Land Your First High-Paying Job in Digital Marketing
+                </p>
+              </div>
+            </div>
 
-            let name = document.getElementById("name").value;
-            let email = document.getElementById("email").value;
-            let phone = document.getElementById("phone").value;
+            <!-- Card 2 -->
+            <div
+              class="w-full flex flex-col items-center justify-center text-center md:h-[240.96px] border border-[#FF7733] bg-[#FFFF] md:p-5 p-3 h-[180px]"
+            >
+              <div class="flex flex-col md:gap-3 justify-center items-center">
+                <img
+                  src="./images/ic (2).png"
+                  class="md:w-[50.76px] md:h-[58.27px] h-9 w-9 my-3"
+                  alt=""
+                />
+                <h1
+                  class="font-secondary font-bold md:text-[25px] text-sm md:leading-[26px] text-[#45565F]"
+                >
+                  Working Professionals
+                </h1>
+                <p
+                  class="font-secondary font-normal md:text-[16px] text-[11px] md:leading-[28.53px] leading[10px] text-[#45565F]"
+                >
+                  Upskill & Switch to a Future-Proof Career
+                </p>
+              </div>
+            </div>
 
-            // Call order.php to create an order
-            fetch("order.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name, email, phone })
-            })
-            .then(response => response.json())
-            .then(data => {
-                console.log("Order API Response:", data);
+            <!-- Card 3 -->
+            <div
+              class="w-full flex flex-col items-center justify-center text-center md:h-[240.96px] border border-[#FF7733] bg-[#FFFF] md:p-5 p-3 h-[180px]"
+            >
+              <div class="flex flex-col md:gap-3 justify-center items-center">
+                <img
+                  src="./images/Vector.png"
+                  class="md:w-[50.76px] md:h-[58.27px] h-9 w-9 my-3"
+                  alt=""
+                />
+                <h1
+                  class="font-secondary font-bold md:text-[25px] text-sm md:leading-[26px] text-[#45565F]"
+                >
+                  Entrepreneurs & Business Owners
+                </h1>
+                <p
+                  class="font-secondary font-normal md:text-[16px] text-[11px] md:leading-[28.53px] leading[10px] text-[#45565F]"
+                >
+                  Learn How to Scale Your Business Online
+                </p>
+              </div>
+            </div>
 
-                var options = {
-                    "key": "rzp_test_J60bqBOi1z1aF5", // Your Razorpay Key
-                    "amount": data.amount, 
-                    "currency": "INR",
-                    "name": "My Website",
-                    "description": "Fixed Payment",
-                    "order_id": data.id,
-                    "handler": function (response) {
-                        fetch("verify.php", {
-                            method: "POST",
-                            headers: { "Content-Type": "application/json" },
-                            body: JSON.stringify({
-                                payment_id: response.razorpay_payment_id,
-                                order_id: response.razorpay_order_id,
-                                signature: response.razorpay_signature,
-                                name, email, phone
-                            })
-                        })
-                        .then(res => res.json())
-                        .then(data => alert(data.message));
-                    },
-                    "prefill": { name, email, contact: phone },
-                    "theme": { "color": "#3399cc" }
-                };
-                var rzp1 = new Razorpay(options);
-                rzp1.open();
-            });
-        });
-    </script>
+            <!-- Card 4 -->
+            <div
+              class="w-full flex flex-col items-center justify-center text-center md:h-[240.96px] border border-[#FF7733] bg-[#FFFF] md:p-5 p-3 h-[180px]"
+            >
+              <div class="flex flex-col md:gap-3 justify-center items-center">
+                <img
+                  src="./images/freelancer 1.png"
+                  class="md:w-[50.76px] md:h-[58.27px] h-9 w-9 my-3"
+                  alt=""
+                />
+                <h1
+                  class="font-secondary font-bold md:text-[25px] text-sm md:leading-[26px] text-[#45565F]"
+                >
+                  Freelancers & Side Hustlers
+                </h1>
+                <p
+                  class="font-secondary font-normal md:text-[16px] text-[11px] md:leading-[28.53px] leading[10px] text-[#45565F]"
+                >
+                  Start Earning with Digital Marketing Skills
+                </p>
+              </div>
+            </div>
+          </div>
 
-</body>
+          <!-- Button Section -->
+        </div>
+      </div>
+      <div class="flex justify-center mt-10 animate-bounce">
+        <!-- Button Wrapper -->
+        <a href="./payment.html">
+          <div
+            class="flex rounded-full border-2 border-[#ED2326] overflow-hidden shadow-lg"
+          >
+            <!-- LIMITED SEATS Button -->
+            <button
+              id="limitedSeatsBtn"
+              class="px-6 py-3 text-[#ED2326] text-sm font-bold bg-white transition-all duration-300 w-40"
+            >
+              LIMITED SEATS
+            </button>
+
+            <!-- ENROLL NOW! Button -->
+            <button
+              id="enrollNowBtn"
+              class="px-6 py-3 bg-[#ED2326] rounded-full text-sm text-white font-bold transition-all duration-300 w-40"
+            >
+              ENROLL NOW!
+            </button>
+          </div>
+        </a>
+      </div>
+      <!-- Cards Section -->
+      <div
+        class="flex flex-col md:flex-row justify-center md:mt-10 mt-5 px-5 gap-10"
+      >
+        <div>
+          <div class="mb-5">
+            <h1 class="text-[#FF7733] font-bold lg:text-5xl text-2xl">
+              What You’ll Learn?
+            </h1>
+            <p class="lg:text-2xl text-lg font-normal">
+              (Master 15+ Digital Marketing Skills)
+            </p>
+          </div>
+          <div
+            class="w-full px-5 md:w-[370px] lg:w-[475px] h-auto md:h-[180px] lg:h-[170px] border border-[#FF7733] rounded-2xl bg-[#fff]"
+          >
+            <div class="flex justify-center flex-col">
+              <div class="flex items-center py-5">
+                <h1
+                  class="font-primary font-bold text-[24px] md:text-3xl lg:text-[40px] text-[#FF7733]"
+                >
+                  Bonus
+                </h1>
+                <!-- Orange Line -->
+                <div
+                  class="w-[60px] flex items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+                ></div>
+              </div>
+              <p
+                class="font-secondary w-full font-normal text-[15px] md:text-xl lg:text-[32px] text-[#3C4B53]"
+              >
+                Learn to Use
+                <span class="font-extrabold">AI Tools</span> for Digital
+                Marketing Automation!
+              </p>
+            </div>
+          </div>
+          <div
+            class="w-full mt-5 px-5 md:w-[370px] lg:w-[475px] h-auto md:h-[180px] py-5 lg:h-[190px] border border-[#FF7733] rounded-2xl bg-[#fff]"
+          >
+            <div class="flex justify-center flex-col">
+              <p
+                class="font-secondary w-full font-normal text-[15px] md:text-3xl lg:text-[32px] text-[#3C4B53]"
+              >
+                <span class="text-[#45565F] lg:text-3xl md:text-2xl font-bold">
+                  Hands-On Training
+                </span>
+                with Live Client Projects
+              </p>
+              <h1
+                class="text-[#FF7733] lg:text-4xl md:text-3xl text-xl font-bold"
+              >
+                No Theories, Only Execution!
+              </h1>
+            </div>
+          </div>
+          <div
+            class="w-full mt-5 px-5 md:w-[370px] lg:w-[475px] h-[200px] md:h-[300px] lg:h-[320px] border border-[#FF7733] rounded-2xl bg-[#fff]"
+          ></div>
+        </div>
+        <div>
+          <div class="">
+            <div class="flex items-center">
+              <h1
+                class="font-primary font-bold text-[15px] md:text-xl lg:text-[29px] text-[#45565F]"
+              >
+                Social Media Marketing
+              </h1>
+              <!-- Orange Line -->
+              <div
+                class="w-[60px] flex ml-3 items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+              ></div>
+            </div>
+            <p
+              class="lg:text-2xl md:text-sm mt-2 text-xs font-normal text-[#45565F]"
+            >
+              Facebook, Instagram, LinkedIn, Twitter & More
+            </p>
+            <div class="w-full max-w-[646px] h-0.5 bg-gray-300 mt-4"></div>
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center">
+              <h1
+                class="font-primary font-bold text-[15px] md:text-xl lg:text-[29px] text-[#45565F]"
+              >
+                Google & Meta Ads
+              </h1>
+              <!-- Orange Line -->
+              <div
+                class="w-[60px] ml-3 flex items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+              ></div>
+            </div>
+            <p
+              class="lg:text-2xl md:text-sm text-xs mt-2 font-normal text-[#45565F]"
+            >
+              Run High-ROI Ad Campaigns Like a Pro
+            </p>
+            <div class="w-full max-w-[646px] h-0.5 bg-gray-300 mt-4"></div>
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center">
+              <h1
+                class="font-primary font-bold text-[15px] md:text-xl lg:text-[29px] text-[#45565F]"
+              >
+                SEO & YouTube Growth Hacking 
+              </h1>
+              <!-- Orange Line -->
+              <div
+                class="w-[60px] flex items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+              ></div>
+            </div>
+            <p
+              class="lg:text-2xl md:text-sm text-xs mt-2 font-normal text-[#45565F]"
+            >
+              Rank Higher & Get Organic Traffic
+            </p>
+            <div class="w-full max-w-[646px] h-0.5 bg-gray-300 mt-4"></div>
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center">
+              <h1
+                class="font-primary font-bold text-[15px] md:text-xl lg:text-[29px] text-[#45565F]"
+              >
+                Content Writing & Copy writing 
+              </h1>
+              <!-- Orange Line -->
+              <div
+                class="w-[60px] flex items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+              ></div>
+            </div>
+            <p
+              class="lg:text-2xl md:text-sm text-xs mt-2 font-normal text-[#45565F]"
+            >
+              Drive Conversions with Words
+            </p>
+            <div class="w-full max-w-[646px] h-0.5 bg-gray-300 mt-4"></div>
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center">
+              <h1
+                class="font-primary font-bold text-[15px] md:text-xl lg:text-[29px] text-[#45565F]"
+              >
+                Lead Generation & Sales Funnels 
+              </h1>
+              <!-- Orange Line -->
+              <div
+                class="w-[60px] flex items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+              ></div>
+            </div>
+            <p
+              class="lg:text-2xl md:text-sm text-xs mt-2 font-normal text-[#45565F]"
+            >
+              Generate & Convert Leads Effectively
+            </p>
+            <div class="w-full max-w-[646px] h-0.5 bg-gray-300 mt-4"></div>
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center">
+              <h1
+                class="font-primary font-bold text-[15px] md:text-xl lg:text-[29px] text-[#45565F]"
+              >
+                Email & WhatsApp Marketing 
+              </h1>
+              <!-- Orange Line -->
+              <div
+                class="w-[60px] flex items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+              ></div>
+            </div>
+            <p
+              class="lg:text-2xl md:text-sm text-xs mt-2 font-normal text-[#45565F]"
+            >
+              Automate & Scale Your Business
+            </p>
+            <div class="w-full max-w-[646px] h-0.5 bg-gray-300 mt-4"></div>
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center">
+              <h1
+                class="font-primary font-bold text-[15px] md:text-xl lg:text-[29px] text-[#45565F]"
+              >
+                E-commerce Marketing 
+              </h1>
+              <!-- Orange Line -->
+              <div
+                class="w-[60px] flex items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+              ></div>
+            </div>
+            <p
+              class="lg:text-2xl md:text-sm text-xs mt-2 font-normal text-[#45565F]"
+            >
+              Sell More on Amazon, Flipkart & Shopify
+            </p>
+            <div class="w-full max-w-[646px] h-0.5 bg-gray-300 mt-4"></div>
+          </div>
+          <div class="mt-5">
+            <div class="flex items-center">
+              <h1
+                class="font-primary font-bold text-[15px] md:text-xl lg:text-[29px] text-[#45565F]"
+              >
+                Personal Branding & LinkedIn Growth 
+              </h1>
+              <!-- Orange Line -->
+              <div
+                class="w-[60px] flex items-center justify-center sm:w-[94.5px] h-0.5 bg-[#FF7733]"
+              ></div>
+            </div>
+            <p
+              class="lg:text-2xl md:text-sm text-xs mt-2 font-normal text-[#45565F]"
+            >
+              Build Authority & Influence
+            </p>
+            <div class="w-full max-w-[646px] h-0.5 bg-gray-300 mt-4"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="px-5">
+        <div
+          class="relative bg-[#415CCE] w-full xl:w-[1200px] mx-auto h-fit rounded-lg mt-10 overflow-hidden"
+        >
+          
+          <div
+            class="absolute w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 bg-white/20 rounded-full top-24 left-[-50px] md:top-32 md:left-[-100px]"
+          ></div>
+       
+          <div
+            class="absolute w-48 h-48 sm:w-64 sm:h-64 md:w-72 md:h-72 bg-white/20 rounded-full bottom-16 right-[-50px] md:bottom-24 md:right-[-100px]"
+          ></div>
+
+          
+          <div
+            class="relative z-10 flex items-center justify-center min-h-screen md:px-4 py-8"
+          >
+            <div class="text-white w-full max-w-4xl px-4">
+             
+              <h1
+                class="text-2xl sm:text-3xl md:text-4xl font-bold text-center mb-6"
+              >
+                Meet Your Mentor: Mr. Sandesh M
+              </h1>
+
+         
+              <div class="flex justify-center">
+                <div
+                  class="bg-white w-full max-w-sm sm:max-w-md md:max-w-lg h-48 sm:h-64 md:h-72 rounded-3xl mb-8"
+                ></div>
+              </div>
+
+
+              <ul
+                class="space-y-4 text-sm sm:text-base md:text-lg leading-relaxed"
+              >
+                <li class="flex items-start">
+                  <span class="mr-2">🔥</span>
+                  The man behind ₹100+ CRORE in ROI & 350+ brand success
+                  stories!
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">🔥</span>
+                  10+ years of revolutionizing digital marketing
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">🔥</span>
+                  Founder of Sunrise Digital Media — where brands turn into
+                  powerhouses
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">🔥</span>
+                  Strategic mastermind behind industry giants: Mysore Sandal
+                  (KSDL) | Nandini (KMF)
+                </li>
+                <ul
+                  class="flex flex-col items-start list-disc ml-6 sm:ml-10 mt-2"
+                >
+                  <li>Mysore Sandal (KSDL) | Nandini (KMF)</li>
+                  <li>Dalmia Cement & ACC Cement</li>
+                  <li>SIIMA Awards & Filmfare South</li>
+                  <li>ZEE Kannada, Colors Kannada & more</li>
+                </ul>
+                <li class="flex items-start">
+                  <span class="mr-2">🔥</span>
+                  Expert in Strategy, Growth & Brand Integration — creating
+                  impact, influence & insane results!
+                </li>
+                <li class="flex items-start">
+                  <span class="mr-2">🔥</span>
+                  Want to scale, dominate, and thrive? Learn from the best!
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <div>
+        <div class="mt-10 relative">
+            <h1 class="font-primary font-bold text-5xl text-[#FF7733] text-center">
+              Meet Your Mentor: Mr. Sandesh M
+            </h1>
+    
+            <div class="flex justify-center ">
+              <!-- Background div with lower z-index -->
+              <div
+                class="bg-[#415CCE] p-5 h-24 absolute xl:right-80 xl:top-36 xl:justify-center z-10 flex items-center text-white rounded-3xl"
+              >
+                <p class="font-secondary font-medium text-lg xl:w-3/4">
+                  🚀 10+ years of revolutionizing digital marketing
+                </p>
+              </div>
+    
+              <div
+                class="bg-[#415CCE] w-96 p-8 h-24 absolute xl:justify-start xl:top-80 xl:mr-96 xl:mt-8 z-10 flex items-center text-white rounded-3xl"
+              >
+                <p class="font-secondary font-medium text-lg text-left">
+                  🔥 The man behind ₹100+ CRORE in ROI & 350+ brand success stories!
+                </p>
+              </div>
+    
+              <div
+                class="bg-[#415CCE]  h-24 absolute xl:right-80 xl:bottom-72 xl:justify-end z-10  flex items-center text-white rounded-3xl"
+              >
+                <p class="font-secondary font-medium text-lg w-3/4">
+                  🏆 Founder of Sunrise Digital Media – where brands turn into
+                  powerhouses
+                </p>
+              </div>
+              <!-- Image with higher z-index -->
+              <img src="./images/Layer 5 1.png" alt="" class="relative z-20" />
+              
+
+              </div>
+              <div class="flex justify-center ">
+                <div class="w-[778px] h-5 rounded-xl  bg-[#FF7733]"></div>
+              </div>
+            </div>
+
+            <div class="text-[#1E1E1E]">
+
+                <p class="font-secondary font-bold text-3xl text-center mt-10">
+                    💡 Strategic mastermind behind industry giants:
+                </p>
+
+
+                <div class="flex lg:justify-around lg:flex-row flex-col">
+
+                    <div class="mt-5">
+                        <ul class="list-disc font-medium text-2xl flex flex-col gap-5">
+                            <li>
+                                🧼 Mysore Sandal (KSDL) | 🥛 Nandini (KMF) 
+                            </li>
+
+                            <li>
+                                🏗️ Dalmia Cement & ACC Cement
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="mt-5">
+                        <ul class="list-disc font-medium text-2xl flex flex-col gap-5">
+                            <li>
+                                🧼 Mysore Sandal (KSDL) | 🥛 Nandini (KMF) 
+                            </li>
+
+                            <li>
+                                🏗️ Dalmia Cement & ACC Cement
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+          </div>
+      </div>
+      <!-- BUTTON -->
+      <div class="flex flex-col items-center justify-center mt-10 px-4">
+        <!-- Heading -->
+        <h2
+          class="sm:text-xl md:text-2xl font-bold text-[#45565F] text-sm mb-4 text-center"
+        >
+          Next Batch Starts Soon!
+        </h2>
+
+        <!-- Button Wrapper -->
+        <div class="flex justify-center mt-10 animate-bounce">
+          <!-- Button Wrapper -->
+          <a href="./payment.html">
+            <div
+              class="flex rounded-full border-2 border-[#ED2326] overflow-hidden shadow-lg"
+            >
+              <!-- LIMITED SEATS Button -->
+              <button
+                id="limitedSeatsBtn"
+                class="px-6 py-3 text-[#ED2326] text-sm font-bold bg-white transition-all duration-300 w-40"
+              >
+                LIMITED SEATS
+              </button>
+
+              <!-- ENROLL NOW! Button -->
+              <button
+                id="enrollNowBtn"
+                class="px-6 py-3 bg-[#ED2326] rounded-full text-sm text-white font-bold transition-all duration-300 w-40"
+              >
+                ENROLL NOW!
+              </button>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="flex justify-center px-5">
+        <div
+          class="flex flex-col md:flex-row justify-center md:mt-10 mt-5 md:gap-5 lg:gap-10 lg:ml-10 xl:ml-20"
+        >
+          <div>
+            <div class="mb-5">
+              <h1 class="text-[#FF7733] font-bold lg:text-4xl text-2xl">
+                What EXTRA Do You Get?
+              </h1>
+              <p class="lg:text-xl text-lg font-normal">
+                (Value-Added Bonuses Worth ₹50,000+ FREE!)
+              </p>
+            </div>
+
+            <div
+              class="w-full mt-5 px-5 md:w-[370px] lg:w-[475px] h-[200px] md:h-[600px] lg:h-[600px] border border-[#FF7733] rounded-2xl bg-[#fff]"
+            ></div>
+          </div>
+          <div>
+            <div class="xl:w-[590px]">
+              <div class="flex flex-col">
+                <h1
+                  class="font-primary font-bold text-[20px] md:text-xl lg:text-[48px] text-[#45565F]"
+                >
+                  🔥 BONUS #1 
+                </h1>
+                <!-- Orange Line -->
+                <div class="mt-5 lg:w-[304px] w-32 h-0.5 bg-[#FF7733]"></div>
+              </div>
+              <p
+                class="lg:text-2xl md:text-lg mt-2 lg:w-3/4 text-lg font-normal text-[#45565F]"
+              >
+                Premium AI Marketing & Automation Tools Access
+              </p>
+            </div>
+            <div class="mt-5 xl:w-[590px]">
+              <div class="flex flex-col">
+                <h1
+                  class="font-primary font-bold text-[20px] md:text-xl lg:text-[48px] text-[#45565F]"
+                >
+                  🔥 BONUS #2 
+                </h1>
+                <!-- Orange Line -->
+                <div class="mt-5 lg:w-[304px] w-32 h-0.5 bg-[#FF7733]"></div>
+              </div>
+              <p
+                class="lg:text-2xl md:text-lg mt-2 lg:w-3/4 text-lg font-normal text-[#45565F]"
+              >
+                Exclusive Training on <span class="font-bold"
+                  >Sales Funnels & High-Conversion Ads</span
+                >
+              </p>
+            </div>
+            <div class="mt-5 xl:w-[590px]">
+              <div class="flex flex-col">
+                <h1
+                  class="font-primary font-bold text-[20px] md:text-xl lg:text-[48px] text-[#45565F]"
+                >
+                  🔥 BONUS #3 
+                </h1>
+                <!-- Orange Line -->
+                <div class="mt-5 lg:w-[304px] w-32 h-0.5 bg-[#FF7733]"></div>
+              </div>
+              <p
+                class="lg:text-2xl md:text-lg mt-2 lg:w-3/4 text-lg font-normal text-[#45565F]"
+              >
+                <span class="font-bold">Freelancing & Business Guide</span> to
+                Start Earning in 30 Days
+              </p>
+            </div>
+            <div class="mt-5 xl:w-[590px]">
+              <div class="flex flex-col">
+                <h1
+                  class="font-primary font-bold text-[20px] md:text-xl lg:text-[48px] text-[#45565F]"
+                >
+                  🔥 BONUS #4 
+                </h1>
+                <!-- Orange Line -->
+                <div class="mt-5 lg:w-[304px] w-32 h-0.5 bg-[#FF7733]"></div>
+              </div>
+              <p
+                class="lg:text-2xl md:text-lg mt-2 lg:w-3/4 text-lg font-normal text-[#45565F]"
+              >
+                Secret Hacks to Crack High-Paying Digital Marketing Jobs
+              </p>
+            </div>
+            <div class="mt-5 xl:w-[590px]">
+              <div class="flex flex-col">
+                <h1
+                  class="font-primary font-bold text-[20px] md:text-xl lg:text-[48px] text-[#45565F]"
+                >
+                  🔥 BONUS #5 
+                </h1>
+                <!-- Orange Line -->
+                <div class="mt-5 lg:w-[304px] w-32 h-0.5 bg-[#FF7733]"></div>
+              </div>
+              <p
+                class="lg:text-2xl md:text-lg mt-2 lg:w-3/4 text-lg font-normal text-[#45565F]"
+              >
+                Lifetime Access to a <span class="font-bold"
+                  >Private Community of Digital Marketers</span
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex justify-center mt-10 animate-bounce">
+        <!-- Button Wrapper -->
+        <a href="./payment.html">
+          <div
+            class="flex rounded-full border-2 border-[#ED2326] overflow-hidden shadow-lg"
+          >
+            <!-- LIMITED SEATS Button -->
+            <button
+              id="limitedSeatsBtn"
+              class="px-6 py-3 text-[#ED2326] text-sm font-bold bg-white transition-all duration-300 w-40"
+            >
+              LIMITED SEATS
+            </button>
+
+            <!-- ENROLL NOW! Button -->
+            <button
+              id="enrollNowBtn"
+              class="px-6 py-3 bg-[#ED2326] rounded-full text-sm text-white font-bold transition-all duration-300 w-40"
+            >
+              ENROLL NOW!
+            </button>
+          </div>
+        </a>
+      </div>
+
+      <div class="flex justify-center pt-10">
+        <div class="mb-5">
+          <h1 class="text-[#FF7733] font-bold lg:text-5xl text-2xl">
+            How It Works?
+          </h1>
+          <p class="lg:text-2xl text-lg font-normal">
+            (Your Roadmap to Success)
+          </p>
+        </div>
+      </div>
+
+      <div class="xl:px-52 lg:px-10 px-5 md:mt-10 mt-5 md:ml-5">
+        <div
+          class="grid grid-cols-1 xl:grid-cols-9 lg:grid-cols-9 md:grid-cols-5 items-center"
+        >
+          <!-- Step 1 -->
+          <div class="md:col-span-1 xl:flex flex-col xl:items-center">
+            <h1
+              class="font-primary font-bold text-[15px] md:text-xl lg:text-[32px] text-[#45565F]"
+            >
+              ✅ Step 1:
+            </h1>
+            <p
+              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+            >
+              Fill the Form & Get a FREE Counseling Call
+            </p>
+          </div>
+          <!-- Arrow between Step 1 & Step 2 (visible on md and above) -->
+          <div class="hidden md:flex md:col-span-1 justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-20 w-20 text-[#FF7733]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </div>
+          <!-- Step 2 -->
+          <div class="md:col-span-1 xl:flex flex-col xl:items-center">
+            <h1
+              class="font-primary font-bold text-[15px] md:text-xl lg:text-[32px] text-[#45565F]"
+            >
+              ✅ Step 2:
+            </h1>
+            <p
+              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+            >
+              Get Full Course Details & Career Guidance
+            </p>
+          </div>
+          <!-- Arrow between Step 2 & Step 3 -->
+          <div class="hidden md:flex md:col-span-1 justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-20 w-20 text-[#FF7733]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </div>
+          <!-- Step 3 -->
+          <div class="md:col-span-1 xl:flex flex-col xl:items-center">
+            <h1
+              class="font-primary font-bold text-[15px] md:text-xl lg:text-[32px] text-[#45565F]"
+            >
+              ✅ Step 3:
+            </h1>
+            <p
+              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+            >
+              Start Learning from Industry Experts with Hands-On Training
+            </p>
+          </div>
+          <!-- Arrow between Step 3 & Step 4 -->
+          <div class="hidden md:flex md:col-span-1 justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-20 w-20 text-[#FF7733]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </div>
+          <!-- Step 4 -->
+          <div class="md:col-span-1 xl:flex flex-col xl:items-center">
+            <h1
+              class="font-primary font-bold text-[15px] md:text-xl lg:text-[32px] text-[#45565F]"
+            >
+              ✅ Step 4:
+            </h1>
+            <p
+              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+            >
+              Work on Live Projects, Build a Portfolio & Gain Practical
+              Experience
+            </p>
+          </div>
+          <!-- Arrow between Step 4 & Step 5 -->
+          <div class="hidden md:flex md:col-span-1 justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-20 w-20 text-[#FF7733]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 7l5 5m0 0l-5 5m5-5H6"
+              />
+            </svg>
+          </div>
+          <!-- Step 5 -->
+          <div class="md:col-span-1 xl:flex flex-col xl:items-center">
+            <h1
+              class="font-primary font-bold text-[15px] md:text-xl lg:text-[32px] text-[#45565F]"
+            >
+              ✅ Step 5:
+            </h1>
+            <p
+              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+            >
+              Get an Internship + Certification + Job Assistance
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-16">
+        <div
+          class="relative overflow-hidden bg-[#F8F6F2] py-8 px-4 md:py-16 md:px-8"
+        >
+          <!-- Orange arcs behind -->
+          <!-- <div
+            class="absolute top-0 right-0 w-[160px] h-[160px] lg:w-[200px] border lg:h-[200px] bg-[#F8F6F2] rounded-bl-[160px] lg:rounded-bl-[200px] z-0"
+          ></div> -->
+          <div
+            class="absolute top-0 right-0 w-[70px] h-[70px] lg:w-[200px] lg:h-[200px] bg-[#FF7733] rounded-bl-[70px] lg:rounded-bl-[200px] md:w-[160px] md:h-[160px] md:rounded-bl-[160px] z-0"
+          ></div>
+          <div
+            class="absolute bottom-0 left-0 w-[70px] h-[70px] lg:w-[200px] lg:h-[200px] bg-[#FF7733] rounded-tr-[70px] lg:rounded-tr-[200px] md:w-[90px] md:h-[90px] md:rounded-tr-[90px] z-0"
+          ></div>
+
+          <!-- NEW arc on top with the same #F8F6F2 color -->
+
+          <!-- Main content container (above all arcs) -->
+          <div
+            class="relative z-20 max-w-4xl mx-auto flex flex-col items-center text-center"
+          >
+            <!-- "special offer" with lines -->
+            <div class="flex items-center gap-3 mb-4">
+              <div class="w-[100px] h-0.5 bg-[#45565F]"></div>
+              <span
+                class="text-[#45565F] font-medium font-primary text-[20px] md:text-[35px]"
+              >
+                special offer
+              </span>
+              <div class="w-[100px] h-0.5 bg-[#45565F]"></div>
+            </div>
+
+            <!-- Main headline -->
+            <h1
+              class="font-bold text-[40px] md:text-[64px] leading-tight md:leading-[68px] font-primary text-[#FF7733] mb-4"
+            >
+              LIMITED TIME ONLY!
+            </h1>
+
+            <!-- Descriptive text lines -->
+            <p
+              class="font-secondary font-medium text-[18px] md:text-[24px] leading-snug md:leading-[61px] text-[#45565F]"
+            >
+              Enroll Now &amp; Get 2 Additional Premium Courses
+              <span class="font-bold">Absolutely FREE!</span>
+            </p>
+            <p
+              class="font-secondary font-medium text-[18px] md:text-[24px] leading-snug md:leading-[60px] text-[#45565F]"
+            >
+              Join Before [Date] &amp; Unlock a
+              <span class="font-bold">20% Early Bird Discount!</span>
+            </p>
+            <p
+              class="font-secondary font-medium text-[20px] md:text-[32px] leading-snug md:leading-[44px] text-[#FF7733] mt-4"
+            >
+              Fill the Form Below &amp; Secure Your Spot Now!
+            </p>
+
+            <!-- Example button (optional) -->
+            <!--
+    <button class="mt-6 px-6 py-3 bg-[#FF7733] text-white font-bold text-lg rounded-full 
+                   hover:bg-orange-500 transition">
+      ENROLL NOW!
+    </button>
+    -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <footer class="bg-[#44433f] z-50 text-white text-center py-6 shadow-lg sticky bottom-0">
+        <a href="./payment.html">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4">
+                <div class="flex flex-col mb-4 md:mb-0">
+                  <p class="text-2xl font-bold animate-pulse">Limited Seats Only!</p>
+                  <p id="timer" class="text-4xl font-mono tracking-widest">15:00</p>
+                </div>
+                <button class="px-6 py-3 animate-bounce bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition duration-300 shadow-md">
+                  Enroll Now
+                </button>
+              </div>
+        </a>
+      </footer> -->
+  </body>
 </html>
+
+<script>
+  // Duration for the timer in seconds (15 minutes)
+  const timerDuration = 15 * 60;
+
+  // Check for an existing end time in localStorage
+  let endTime = localStorage.getItem("timerEndTime");
+  if (!endTime) {
+    // No stored end time, so set one for now + timerDuration (in milliseconds)
+    endTime = Date.now() + timerDuration * 1000;
+    localStorage.setItem("timerEndTime", endTime);
+  } else {
+    // Parse the stored end time
+    endTime = parseInt(endTime, 10);
+  }
+
+  const timerElement = document.getElementById("timer");
+
+  function updateTimer() {
+    // Calculate remaining time in seconds
+    const now = Date.now();
+    let remaining = Math.floor((endTime - now) / 1000);
+
+    // If the time is up, reset the timer display and clear the interval
+    if (remaining <= 0) {
+      remaining = 0;
+      clearInterval(timerInterval);
+      // Optionally, you can remove the timer from localStorage once it's done
+      localStorage.removeItem("timerEndTime");
+    }
+
+    // Calculate minutes and seconds for display
+    const minutes = Math.floor(remaining / 60);
+    const seconds = remaining % 60;
+
+    // Display the time in MM:SS format
+    timerElement.textContent = `${minutes.toString().padStart(2, "0")}:${seconds
+      .toString()
+      .padStart(2, "0")}`;
+  }
+
+  // Initial call to set the timer display
+  updateTimer();
+  // Update the timer every second
+  const timerInterval = setInterval(updateTimer, 1000);
+</script>
+<script>
+  function toggleButtons() {
+    const limitedSeatsBtn = document.getElementById("limitedSeatsBtn");
+    const enrollNowBtn = document.getElementById("enrollNowBtn");
+
+    // Swap the styles between the two buttons
+    limitedSeatsBtn.classList.toggle("bg-[#ED2326]");
+    limitedSeatsBtn.classList.toggle("text-white");
+    limitedSeatsBtn.classList.toggle("bg-white");
+    limitedSeatsBtn.classList.toggle("text-[#ED2326]");
+
+    enrollNowBtn.classList.toggle("bg-[#ED2326]");
+    enrollNowBtn.classList.toggle("text-white");
+    enrollNowBtn.classList.toggle("bg-white");
+    enrollNowBtn.classList.toggle("text-[#ED2326]");
+  }
+
+  // Add event listeners for BOTH buttons
+  document
+    .getElementById("limitedSeatsBtn")
+    .addEventListener("click", toggleButtons);
+  document
+    .getElementById("enrollNowBtn")
+    .addEventListener("click", toggleButtons);
+</script>
+<script>
+  function toggleButtons() {
+    const seatsFillingFastBtn = document.getElementById("seatsFillingFastBtn");
+    const enrollNowBtn = document.getElementById("enrollNowBtn");
+
+    // Swap styles between the two buttons
+    seatsFillingFastBtn.classList.toggle("bg-[#ED2326]");
+    seatsFillingFastBtn.classList.toggle("text-white");
+    seatsFillingFastBtn.classList.toggle("bg-white");
+    seatsFillingFastBtn.classList.toggle("text-[#ED2326]");
+
+    enrollNowBtn.classList.toggle("bg-[#ED2326]");
+    enrollNowBtn.classList.toggle("text-white");
+    enrollNowBtn.classList.toggle("bg-white");
+    enrollNowBtn.classList.toggle("text-[#ED2326]");
+  }
+
+  // Add event listeners for BOTH buttons
+  document
+    .getElementById("seatsFillingFastBtn")
+    .addEventListener("click", toggleButtons);
+  document
+    .getElementById("enrollNowBtn")
+    .addEventListener("click", toggleButtons);
+</script>

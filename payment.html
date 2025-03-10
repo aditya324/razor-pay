@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>One Click Academy - Digital Marketing Course Enrollment</title>
+    <!-- Razorpay Checkout Script -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gradient-to-r from-blue-100 to-indigo-100">
+    <div
+      class="max-w-4xl mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden"
+    >
+      <!-- Header with Logo -->
+      <div class="p-6 border-b flex flex-col items-center">
+        <!-- Replace with your actual logo URL if needed -->
+        <img
+          src="./images/OneclickLogoo 1.png"
+          alt="One Click Academy Logo"
+          class="w-24 h-fit object-contain"
+        />
+        <h1 class="text-2xl font-bold text-gray-800 mt-4">One Click Academy</h1>
+        <p class="text-gray-600">Digital Marketing Course Enrollment</p>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="flex border-b">
+        <button
+          id="userTab"
+          class="w-1/2 py-3 text-blue-500 font-semibold border-b-2 border-blue-500"
+        >
+          Your Details
+        </button>
+        <button
+          id="paymentTabBtn"
+          class="w-1/2 py-3 text-gray-500 hover:text-blue-500 font-semibold"
+        >
+          Course Info
+        </button>
+      </div>
+
+      <!-- Form with Two Tabs -->
+      <form id="paymentForm">
+        <!-- User Info Tab -->
+        <div id="userInfoTab" class="p-6">
+          <!-- Two-column grid for first name and last name -->
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label for="firstName" class="block text-gray-700 font-medium"
+                >First Name</label
+              >
+              <input
+                type="text"
+                id="firstName"
+                name="firstName"
+                required
+                class="w-full p-3 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label for="lastName" class="block text-gray-700 font-medium"
+                >Last Name</label
+              >
+              <input
+                type="text"
+                id="lastName"
+                name="lastName"
+                required
+                class="w-full p-3 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <!-- Two-column grid for email and phone -->
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <label for="email" class="block text-gray-700 font-medium"
+                >Email</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="w-full p-3 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label for="phone" class="block text-gray-700 font-medium"
+                >Phone</label
+              >
+              <input
+                type="tel"
+                id="phone"
+                name="phone"
+                required
+                class="w-full p-3 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          </div>
+
+          <!-- Two-column grid for city and address -->
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div>
+              <label for="city" class="block text-gray-700 font-medium"
+                >City</label
+              >
+              <input
+                type="text"
+                id="city"
+                name="city"
+                required
+                class="w-full p-3 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <div>
+              <label for="address" class="block text-gray-700 font-medium"
+                >Address</label
+              >
+              <textarea
+                id="address"
+                name="address"
+                required
+                rows="3"
+                class="w-full p-3 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              ></textarea>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            id="toPaymentTab"
+            class="mt-6 w-full bg-[#FF7733] text-white py-3 rounded"
+          >
+            Next
+          </button>
+        </div>
+
+        <!-- Payment Info Tab (hidden by default) -->
+        <div id="paymentInfoTab" class="hidden p-6">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">
+            Digital Marketing Course
+          </h2>
+          <p class="mt-2 text-gray-600">
+            Join One Click Academy and unlock the secrets of digital marketing.
+            Our comprehensive course covers SEO, Social Media Marketing, Email
+            Marketing, PPC, and more.
+          </p>
+          <ul class="mt-4 text-gray-700 list-disc list-inside">
+            <li>6 Weeks Comprehensive Curriculum</li>
+            <li>Expert Instructors</li>
+            <li>Hands-On Projects</li>
+            <li>Certification on Completion</li>
+          </ul>
+          <div class="mt-6">
+            <label class="block text-gray-700 font-medium">Course Fee:</label>
+            <div class="mt-2 p-4 bg-gray-100 rounded shadow">
+              <span class="text-3xl font-bold text-blue-600">₹30,000</span>
+            </div>
+          </div>
+          <button
+            type="submit"
+            class="mt-6 w-full bg-[#FF7733] text-white py-3 rounded"
+          >
+            Proceed to Pay
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script>
+      // Helper function to validate that all required fields are filled.
+      function validateUserInfo() {
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const city = document.getElementById("city").value.trim();
+        const address = document.getElementById("address").value.trim();
+        return firstName && lastName && email && phone && city && address;
+      }
+
+      // Tab elements
+      const userTab = document.getElementById("userTab");
+      const paymentTabBtn = document.getElementById("paymentTabBtn");
+      const userInfoTab = document.getElementById("userInfoTab");
+      const paymentInfoTab = document.getElementById("paymentInfoTab");
+      const toPaymentTab = document.getElementById("toPaymentTab");
+
+      // Switch to Payment Info tab when "Next" is clicked
+      toPaymentTab.addEventListener("click", function () {
+        if (!validateUserInfo()) {
+          alert("Please fill in all required fields.");
+          return;
+        }
+        userInfoTab.classList.add("hidden");
+        paymentInfoTab.classList.remove("hidden");
+        userTab.classList.remove(
+          "border-b-2",
+          "border-blue-500",
+          "text-blue-500"
+        );
+        paymentTabBtn.classList.add(
+          "border-b-2",
+          "border-blue-500",
+          "text-blue-500"
+        );
+      });
+
+      // Switch to User Info tab when "Your Details" is clicked
+      userTab.addEventListener("click", function () {
+        userInfoTab.classList.remove("hidden");
+        paymentInfoTab.classList.add("hidden");
+        userTab.classList.add("border-b-2", "border-blue-500", "text-blue-500");
+        paymentTabBtn.classList.remove(
+          "border-b-2",
+          "border-blue-500",
+          "text-blue-500"
+        );
+      });
+
+      // If user clicks Payment Info tab, validate first
+      paymentTabBtn.addEventListener("click", function () {
+        if (!validateUserInfo()) {
+          alert(
+            "Please fill in all required fields before proceeding to payment."
+          );
+          return;
+        }
+        userInfoTab.classList.add("hidden");
+        paymentInfoTab.classList.remove("hidden");
+        paymentTabBtn.classList.add(
+          "border-b-2",
+          "border-blue-500",
+          "text-blue-500"
+        );
+        userTab.classList.remove(
+          "border-b-2",
+          "border-blue-500",
+          "text-blue-500"
+        );
+      });
+
+      // Payment integration using Razorpay Checkout
+      document
+        .getElementById("paymentForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          if (!validateUserInfo()) {
+            alert("Please fill in all required fields.");
+            return;
+          }
+
+          // Collect user data
+          const firstName = document.getElementById("firstName").value;
+          const lastName = document.getElementById("lastName").value;
+          const email = document.getElementById("email").value;
+          const phone = document.getElementById("phone").value;
+          const city = document.getElementById("city").value;
+          const address = document.getElementById("address").value;
+          const name = firstName + " " + lastName;
+
+          // Call order.php to create an order
+          fetch("order.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, phone, city, address }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              console.log("Order API Response:", data);
+
+              const options = {
+                key: "rzp_test_J60bqBOi1z1aF5", // Replace with your Razorpay Key
+                amount: data.amount,
+                currency: "INR",
+                name: "One Click Academy",
+                description: "Digital Marketing Course Enrollment",
+                order_id: data.id,
+                handler: function (response) {
+                  // Verify the payment by calling verify.php
+                  fetch("verify.php", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      payment_id: response.razorpay_payment_id,
+                      order_id: response.razorpay_order_id,
+                      signature: response.razorpay_signature,
+                      name,
+                      email,
+                      phone,
+                      city,
+                      address,
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then((data) => alert(data.message));
+                },
+                prefill: {
+                  name,
+                  email,
+                  contact: phone,
+                },
+                theme: { color: "#3399cc" },
+              };
+
+              const rzp1 = new Razorpay(options);
+              rzp1.open();
+            });
+        });
+    </script>
+  </body>
+</html>
