@@ -19,9 +19,9 @@
     <div class="overflow-hidden">
       <div class="flex justify-center items-center">
         <img
-          src="./images/OneclickLogoo 1.png"
+          src="./images/oneclicklogo.png"
           alt=""
-          class="object-contain h-28"
+          class="object-contain h-20 m-3"
         />
       </div>
       <!-- HERO SECTION -->
@@ -55,26 +55,28 @@
                   ENROLL NOW!
                 </button>
               </a>
-              <button
-                class="border border-orange-400 text-orange-500 hover:bg-orange-50 font-medium py-3 lg:px-8 rounded-full w-32 md:w-48 text-sm lg:text-lg flex justify-center items-center transition duration-300"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 mr-2"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                    clip-rule="evenodd"
-                  />
+              <button id="videoBtn" class="border border-orange-400 text-orange-500 hover:bg-orange-50 font-medium py-3 lg:px-8 rounded-full w-32 md:w-48 text-sm lg:text-lg flex justify-center items-center transition duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
                 </svg>
                 Our Videos
               </button>
             </div>
+
+
+
+            <div id="videoModal" class="fixed inset-0 z-50 bg-opacity-60 flex items-center justify-center hidden">
+              <div class="bg-white rounded-lg overflow-hidden max-w-3xl w-full relative">
+                <button id="closeBtn" class="absolute top-2 right-2 text-gray-700 text-2xl">&times;</button>
+                <!-- Responsive Video Container -->
+                <div class="relative" style="padding-top: 56.25%;">
+                  <iframe id="video" class="absolute top-0 left-0 w-full h-full" src="https://www.youtube.com/embed/jG2AciJ3zHY" title="YouTube video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                
+              </div>
+            </div>
           </div>
-          <div>
+          <div> 
             <img
               src="./images/image.png"
               alt=""
@@ -245,7 +247,7 @@
             </div>
           </div>
         </div>
-        <div class="w-full md:w-1/2 lg:mt-2 flex flex-col gap-7">
+        <div class="w-full md:w-1/2  flex flex-col gap-9 mt-1">
           <p
             class="text-[12px] md:text-base xl:text-[24px] lg:text-[21px] font-semibold text-[#48545B] leading-[24px] lg:leading-[36.75px]"
           >
@@ -717,79 +719,52 @@
       </div> -->
 
       <div>
-        <div class="mt-10 relative">
-            <h1 class="font-primary font-bold text-5xl text-[#FF7733] text-center">
+        <div class="mt-5  mb-5 relative">
+            <h1 class="font-primary font-bold xl:text-5xl md:text-4xl text-[#FF7733] text-center lg:my-5">
               Meet Your Mentor: Mr. Sandesh M
             </h1>
     
             <div class="flex justify-center ">
-              <!-- Background div with lower z-index -->
-              <!-- <div
-                class="bg-[#415CCE] xl:w-[416px] w-[136.85] h-[106px]  p-3 xl:p-5 xl:h-24 absolute xl:right-80 right-10  xl:top-36 xl:justify-center z-10 flex items-center text-white rounded-3xl"
-              >
-                <p class="font-secondary xl:font-medium font-light xl:text-lg text-sm xl:w-3/4">
-                  🚀 10+ years of revolutionizing digital marketing
-                </p>
-              </div> -->
-    
-              <!-- <div
-                class="bg-[#415CCE] w-96 p-8 h-24 absolute xl:justify-start xl:top-80 xl:mr-96 xl:mt-8 z-10 flex items-center text-white rounded-3xl"
-              >
-                <p class="font-secondary font-medium text-lg text-left">
-                  🔥 The man behind ₹100+ CRORE in ROI & 350+ brand success stories!
-                </p>
-              </div> -->
-    
-              <!-- <div
-                class="bg-[#415CCE]  h-24 absolute xl:right-80 xl:bottom-72 xl:justify-end z-10  flex items-center text-white rounded-3xl"
-              >
-                <p class="font-secondary font-medium text-lg w-3/4">
-                  🏆 Founder of Sunrise Digital Media – where brands turn into
-                  powerhouses
-                </p>
-              </div> -->
-              <!-- Image with higher z-index -->
-              <img src="./images/Group 90.png" alt="" class=" object-cover" />
+              
+              <div class="">
+                <img src="./images/Group 90.png" alt="" class=" object-cover  m-5 xl:ml-40  " />
+              </div>
               
 
               </div>
               
             </div>
 
-            <div class="text-[#1E1E1E]">
+            <div class="text-[#45565F] px-3 md:px-10 xl:px-0">
 
-                <p class="font-secondary font-bold text-3xl text-center mt-10">
+                <p class="font-secondary font-bold xl:text-3xl md:text-lg text-center mt-10">
                     💡 Strategic mastermind behind industry giants:
                 </p>
 
 
-                <div class="flex lg:justify-around lg:flex-row flex-col">
-
-                    <div class="mt-5">
-                        <ul class="list-disc font-medium text-2xl flex flex-col gap-5">
-                            <li>
-                                🧼 Mysore Sandal (KSDL) | 🥛 Nandini (KMF) 
-                            </li>
-
-                            <li>
-                                🏗️ Dalmia Cement & ACC Cement
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="mt-5">
-                        <ul class="list-disc font-medium text-2xl flex flex-col gap-5">
-                            <li>
-                                🧼 Mysore Sandal (KSDL) | 🥛 Nandini (KMF) 
-                            </li>
-
-                            <li>
-                                🏗️ Dalmia Cement & ACC Cement
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 ml-5 xl:ml-0 justify-items-center">
+                  <div class="mt-5">
+                      <ul class="list-disc font-medium xl:text-2xl md:text-lg flex flex-col gap-5">
+                          <li>
+                              🧼 Mysore Sandal (KSDL) | 🥛 Nandini (KMF) 
+                          </li>
+                          <li>
+                              🏗️ Dalmia Cement & ACC Cement
+                          </li>
+                      </ul>
+                  </div>
+              
+                  <div class="mt-5">
+                      <ul class="list-disc font-medium xl:text-2xl md:text-lg flex flex-col gap-5">
+                          <li>
+                              � Mysore Sandal (KSDL) | � Nandini (KMF) 
+                          </li>
+                          <li>
+                              🏗️ Dalmia Cement & ACC Cement
+                          </li>
+                      </ul>
+                  </div>
+              </div>
             </div>
           </div>
       </div>
@@ -831,7 +806,7 @@
 
       <div class="flex justify-center px-5">
         <div
-          class="flex flex-col md:flex-row justify-center md:mt-10 mt-5 md:gap-5 lg:gap-10 lg:ml-10 xl:ml-20"
+          class="flex flex-col md:flex-row justify-center md:mt-12 mt-5 md:gap-5 lg:gap-10 lg:ml-10 xl:ml-20"
         >
           <div>
             <div class="mb-5">
@@ -847,7 +822,7 @@
               class="w-full mt-5 px-5 md:w-[370px] lg:w-[475px] h-[200px] md:h-[600px] lg:h-[600px] border border-[#FF7733] rounded-2xl bg-[#fff]"
             ></div>
           </div>
-          <div>
+          <div class="lg:mt-2">
             <div class="xl:w-[590px]">
               <div class="flex flex-col">
                 <h1
@@ -974,18 +949,19 @@
       </div>
 
       <div class="xl:px-52 lg:px-10 px-5 md:mt-10 mt-5 md:ml-5">
-        <div
-          class="grid grid-cols-1 xl:grid-cols-9 lg:grid-cols-9 md:grid-cols-5 items-center"
+        <div 
+
+          class="grid grid-cols-1 xl:grid-cols-9 lg:grid-cols-5 md:grid-cols-5 items-center"
         >
           <!-- Step 1 -->
-          <div class="md:col-span-1 xl:flex flex-col xl:items-center">
+          <div class="md:col-span-1 xl:flex flex-col xl:items-center w-full">
             <h1
               class="font-primary font-bold text-[15px] md:text-xl lg:text-[32px] text-[#45565F]"
             >
               ✅ Step 1:
             </h1>
             <p
-              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+              class="lg:text-2xl md:text-sm mt-5 text-lg font-normal text-[#45565F] "
             >
               Fill the Form & Get a FREE Counseling Call
             </p>
@@ -1015,7 +991,7 @@
               ✅ Step 2:
             </h1>
             <p
-              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+              class="lg:text-2xl md:text-sm mt-5 text-lg font-normal text-[#45565F]"
             >
               Get Full Course Details & Career Guidance
             </p>
@@ -1045,7 +1021,7 @@
               ✅ Step 3:
             </h1>
             <p
-              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+              class="lg:text-2xl md:text-sm mt-5 text-lg font-normal text-[#45565F]"
             >
               Start Learning from Industry Experts with Hands-On Training
             </p>
@@ -1075,7 +1051,7 @@
               ✅ Step 4:
             </h1>
             <p
-              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+              class="lg:text-2xl md:text-sm mt-5 text-lg font-normal text-[#45565F]"
             >
               Work on Live Projects, Build a Portfolio & Gain Practical
               Experience
@@ -1106,7 +1082,7 @@
               ✅ Step 5:
             </h1>
             <p
-              class="lg:text-2xl md:text-sm mt-2 text-lg font-normal text-[#45565F]"
+              class="lg:text-2xl md:text-sm mt-5 text-lg font-normal text-[#45565F]"
             >
               Get an Internship + Certification + Job Assistance
             </p>
@@ -1184,114 +1160,95 @@
       </div>
     </div>
 
-    <footer class="bg-[#44433f] z-50 text-white text-center py-6 shadow-lg sticky bottom-0">
-        <a href="./payment.html">
-            <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between px-4">
-                <div class="flex flex-col mb-4 md:mb-0">
-                  <p class="text-2xl font-bold animate-pulse">Limited Seats Only!</p>
-                  <p id="timer" class="text-4xl font-mono tracking-widest">15:00</p>
+    <footer class="bg-[#44433f] z-50 text-white text-center lg:py-6 py-2 md:px-3 xl:px-0 px-0 shadow-lg sticky bottom-0">
+      
+       
+            <div class="max-w-7xl mx-auto flex flex-row items-center justify-between px-4">
+                <div class="flex flex-col mb-2 md:mb-0">
+                  <p class="lg:text-2xl text-base font-bold animate-pulse">Limited Time Offer Only!</p>
+                  <p id="timer" class="lg:text-4xl text-3xl font-mono tracking-widest">15:00</p>
                 </div>
-                <button class="px-6 py-3 animate-bounce bg-orange-500 hover:bg-orange-600 text-white font-semibold rounded-lg transition duration-300 shadow-md">
-                  Enroll Now
-                </button>
+                <a href="./payment.html">
+                  <button class="px-6 py-3 animate-bounce bg-[#ED2326] hover:bg-red-600 text-white font-semibold rounded-lg transition duration-300 shadow-md">
+                    Enroll Now
+                  </button>
+                </a>
               </div>
-        </a>
+  
       </footer>
   </body>
 </html>
 
 <script>
-  // Duration for the timer in seconds (15 minutes)
-  const timerDuration = 15 * 60;
+  
 
-  // Check for an existing end time in localStorage
-  let endTime = localStorage.getItem("timerEndTime");
-  if (!endTime) {
-    // No stored end time, so set one for now + timerDuration (in milliseconds)
-    endTime = Date.now() + timerDuration * 1000;
-    localStorage.setItem("timerEndTime", endTime);
+document.addEventListener("DOMContentLoaded", function () {
+  const timerElement = document.getElementById("timer");
+  const totalTime = 15 * 60; 
+  let remainingTime = localStorage.getItem("remainingTime");
+
+
+  if (remainingTime === null) {
+    remainingTime = totalTime;
   } else {
-    // Parse the stored end time
-    endTime = parseInt(endTime, 10);
+    remainingTime = parseInt(remainingTime, 10);
   }
 
-  const timerElement = document.getElementById("timer");
 
   function updateTimer() {
-    // Calculate remaining time in seconds
-    const now = Date.now();
-    let remaining = Math.floor((endTime - now) / 1000);
+    const minutes = Math.floor(remainingTime / 60);
+    const seconds = remainingTime % 60;
+    timerElement.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 
-    // If the time is up, reset the timer display and clear the interval
-    if (remaining <= 0) {
-      remaining = 0;
-      clearInterval(timerInterval);
-      // Optionally, you can remove the timer from localStorage once it's done
-      localStorage.removeItem("timerEndTime");
+    if (remainingTime <= 0) {
+      clearInterval(interval);
+      timerElement.textContent = "00:00";
+      localStorage.removeItem("remainingTime");
+    
+     return 
+    } else {
+      remainingTime--;
+      localStorage.setItem("remainingTime", remainingTime);
     }
-
-    // Calculate minutes and seconds for display
-    const minutes = Math.floor(remaining / 60);
-    const seconds = remaining % 60;
-
-    // Display the time in MM:SS format
-    timerElement.textContent = `${minutes.toString().padStart(2, "0")}:${seconds
-      .toString()
-      .padStart(2, "0")}`;
   }
 
-  // Initial call to set the timer display
+
+  const interval = setInterval(updateTimer, 1000);
+
+
   updateTimer();
-  // Update the timer every second
-  const timerInterval = setInterval(updateTimer, 1000);
+});
 </script>
+
+
 <script>
-  function toggleButtons() {
-    const limitedSeatsBtn = document.getElementById("limitedSeatsBtn");
-    const enrollNowBtn = document.getElementById("enrollNowBtn");
+  // Get elements
+  const videoModal = document.getElementById('videoModal');
+  const videoBtn = document.getElementById('videoBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const iframe = document.getElementById('video');
+  const originalSrc = iframe.src;
 
-    // Swap the styles between the two buttons
-    limitedSeatsBtn.classList.toggle("bg-[#ED2326]");
-    limitedSeatsBtn.classList.toggle("text-white");
-    limitedSeatsBtn.classList.toggle("bg-white");
-    limitedSeatsBtn.classList.toggle("text-[#ED2326]");
+  // Show modal and start autoplay on button click
+  videoBtn.addEventListener('click', () => {
+    videoModal.classList.remove('hidden');
+    if (!iframe.src.includes("autoplay=1")) {
+      iframe.src = originalSrc + "?autoplay=1";
+    }
+  });
 
-    enrollNowBtn.classList.toggle("bg-[#ED2326]");
-    enrollNowBtn.classList.toggle("text-white");
-    enrollNowBtn.classList.toggle("bg-white");
-    enrollNowBtn.classList.toggle("text-[#ED2326]");
-  }
+  // Close modal and reset video on close button click
+  closeBtn.addEventListener('click', () => {
+    videoModal.classList.add('hidden');
+    iframe.src = originalSrc;
+  });
 
-  // Add event listeners for BOTH buttons
-  document
-    .getElementById("limitedSeatsBtn")
-    .addEventListener("click", toggleButtons);
-  document
-    .getElementById("enrollNowBtn")
-    .addEventListener("click", toggleButtons);
+  // Close modal if user clicks outside the modal content
+  videoModal.addEventListener('click', (e) => {
+    if(e.target === videoModal) {
+      videoModal.classList.add('hidden');
+      iframe.src = originalSrc;
+    }
+  });
 </script>
-<script>
-  function toggleButtons() {
-    const seatsFillingFastBtn = document.getElementById("seatsFillingFastBtn");
-    const enrollNowBtn = document.getElementById("enrollNowBtn");
 
-    // Swap styles between the two buttons
-    seatsFillingFastBtn.classList.toggle("bg-[#ED2326]");
-    seatsFillingFastBtn.classList.toggle("text-white");
-    seatsFillingFastBtn.classList.toggle("bg-white");
-    seatsFillingFastBtn.classList.toggle("text-[#ED2326]");
-
-    enrollNowBtn.classList.toggle("bg-[#ED2326]");
-    enrollNowBtn.classList.toggle("text-white");
-    enrollNowBtn.classList.toggle("bg-white");
-    enrollNowBtn.classList.toggle("text-[#ED2326]");
-  }
-
-  // Add event listeners for BOTH buttons
-  document
-    .getElementById("seatsFillingFastBtn")
-    .addEventListener("click", toggleButtons);
-  document
-    .getElementById("enrollNowBtn")
-    .addEventListener("click", toggleButtons);
-</script>

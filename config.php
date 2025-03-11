@@ -13,4 +13,13 @@ if ($conn->connect_error) {
 
 $key_id = "rzp_test_J60bqBOi1z1aF5";
 $key_secret = "uk935K7p4j96UCJgHK8kAU4q";
+
+
+
+$password="kmcyxkgpsnocrofp";
+$username="adityakulkarni54321@gmail.com"
+
+
+
+
 ?>
