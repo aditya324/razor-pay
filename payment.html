@@ -4,27 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>One Click Academy - Digital Marketing Course Enrollment</title>
-  
-    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="bg-gradient-to-r from-blue-100 to-indigo-100">
-    <div
-      class="max-w-4xl mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden"
-    >
-
+  <body class="bg-gradient-to-r from-blue-100 to-indigo-100 px-5 lg:px-0">
+    <div class="max-w-4xl w-full mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
       <div class="p-6 border-b flex flex-col items-center">
-
         <img
-          src="./images/OneclickLogoo 1.png"
+          src="./images/oneclicklogo.png"
           alt="One Click Academy Logo"
-          class="w-24 h-fit object-contain"
+          class="w-auto h-auto object-contain"
         />
         <h1 class="text-2xl font-bold text-gray-800 mt-4">One Click Academy</h1>
         <p class="text-gray-600">Digital Marketing Course Enrollment</p>
       </div>
-
 
       <div class="flex border-b">
         <button
@@ -41,16 +35,11 @@
         </button>
       </div>
 
- 
-      <form id="paymentForm">
-
-        <div id="userInfoTab" class="p-6">
-
-          <div class="grid grid-cols-2 gap-4">
+      <form id="paymentForm" class="px-4 sm:px-6 lg:px-8 py-6">
+        <div id="userInfoTab">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label for="firstName" class="block text-gray-700 font-medium"
-                >First Name</label
-              >
+              <label for="firstName" class="block text-gray-700 font-medium">First Name</label>
               <input
                 type="text"
                 id="firstName"
@@ -60,9 +49,7 @@
               />
             </div>
             <div>
-              <label for="lastName" class="block text-gray-700 font-medium"
-                >Last Name</label
-              >
+              <label for="lastName" class="block text-gray-700 font-medium">Last Name</label>
               <input
                 type="text"
                 id="lastName"
@@ -73,12 +60,9 @@
             </div>
           </div>
 
-
-          <div class="grid grid-cols-2 gap-4 mt-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             <div>
-              <label for="email" class="block text-gray-700 font-medium"
-                >Email</label
-              >
+              <label for="email" class="block text-gray-700 font-medium">Email</label>
               <input
                 type="email"
                 id="email"
@@ -88,9 +72,7 @@
               />
             </div>
             <div>
-              <label for="phone" class="block text-gray-700 font-medium"
-                >Phone</label
-              >
+              <label for="phone" class="block text-gray-700 font-medium">Phone</label>
               <input
                 type="tel"
                 id="phone"
@@ -101,12 +83,9 @@
             </div>
           </div>
 
-
-          <div class="grid grid-cols-2 gap-4 mt-4">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             <div>
-              <label for="city" class="block text-gray-700 font-medium"
-                >City</label
-              >
+              <label for="city" class="block text-gray-700 font-medium">City</label>
               <input
                 type="text"
                 id="city"
@@ -116,9 +95,7 @@
               />
             </div>
             <div>
-              <label for="address" class="block text-gray-700 font-medium"
-                >Address</label
-              >
+              <label for="address" class="block text-gray-700 font-medium">Address</label>
               <textarea
                 id="address"
                 name="address"
@@ -138,15 +115,13 @@
           </button>
         </div>
 
-
-        <div id="paymentInfoTab" class="hidden p-6">
+        <div id="paymentInfoTab" class="hidden">
           <h2 class="text-2xl font-bold text-gray-800 mb-4">
             Digital Marketing Course
           </h2>
           <p class="mt-2 text-gray-600">
             Join One Click Academy and unlock the secrets of digital marketing.
-            Our comprehensive course covers SEO, Social Media Marketing, Email
-            Marketing, PPC, and more.
+            Our comprehensive course covers SEO, Social Media Marketing, Email Marketing, PPC, and more.
           </p>
           <ul class="mt-4 text-gray-700 list-disc list-inside">
             <li>6 Weeks Comprehensive Curriculum</li>
@@ -157,10 +132,7 @@
           <div class="mt-6">
             <label class="block text-gray-700 font-medium">Course Fee:</label>
             <div class="mt-2 p-4 bg-gray-100 rounded shadow">
-              <span
-                id="courseFee"
-                class="text-3xl font-bold text-blue-600"
-              ></span>
+              <span id="courseFee" class="text-3xl font-bold text-blue-600"></span>
             </div>
           </div>
           <button
@@ -175,30 +147,20 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const courseFeeElement = document.getElementById("courseFee"); 
-        const remainingTime = parseInt(
-          localStorage.getItem("remainingTime"),
-          10
-        ); 
-
-  
+        const courseFeeElement = document.getElementById("courseFee");
+        const remainingTime = parseInt(localStorage.getItem("remainingTime"), 10);
         if (remainingTime > 0) {
           courseFeeElement.textContent = "₹8,000";
         } else {
-          courseFeeElement.textContent = "₹12,000"; 
+          courseFeeElement.textContent = "₹12,000";
         }
       });
     </script>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-
         const courseFeeElement = document.getElementById("courseFee");
-        const remainingTime = parseInt(
-          localStorage.getItem("remainingTime"),
-          10
-        );
-
+        const remainingTime = parseInt(localStorage.getItem("remainingTime"), 10);
         if (remainingTime > 0) {
           courseFeeElement.textContent = "₹80000";
         } else {
@@ -212,7 +174,6 @@
         const paymentInfoTab = document.getElementById("paymentInfoTab");
         const toPaymentTab = document.getElementById("toPaymentTab");
 
-
         toPaymentTab.addEventListener("click", function () {
           if (!validateUserInfo()) {
             alert("Please fill in all required fields correctly.");
@@ -220,232 +181,29 @@
           }
           userInfoTab.classList.add("hidden");
           paymentInfoTab.classList.remove("hidden");
-          userTab.classList.remove(
-            "border-b-2",
-            "border-blue-500",
-            "text-blue-500"
-          );
-          paymentTabBtn.classList.add(
-            "border-b-2",
-            "border-blue-500",
-            "text-blue-500"
-          );
+          userTab.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
+          paymentTabBtn.classList.add("border-b-2", "border-blue-500", "text-blue-500");
         });
-
 
         userTab.addEventListener("click", function () {
           userInfoTab.classList.remove("hidden");
           paymentInfoTab.classList.add("hidden");
-          userTab.classList.add(
-            "border-b-2",
-            "border-blue-500",
-            "text-blue-500"
-          );
-          paymentTabBtn.classList.remove(
-            "border-b-2",
-            "border-blue-500",
-            "text-blue-500"
-          );
+          userTab.classList.add("border-b-2", "border-blue-500", "text-blue-500");
+          paymentTabBtn.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
         });
-
 
         paymentTabBtn.addEventListener("click", function () {
           if (!validateUserInfo()) {
-            alert(
-              "Please fill in all required fields before proceeding to payment."
-            );
+            alert("Please fill in all required fields before proceeding to payment.");
             return;
           }
           userInfoTab.classList.add("hidden");
           paymentInfoTab.classList.remove("hidden");
-          paymentTabBtn.classList.add(
-            "border-b-2",
-            "border-blue-500",
-            "text-blue-500"
-          );
-          userTab.classList.remove(
-            "border-b-2",
-            "border-blue-500",
-            "text-blue-500"
-          );
+          paymentTabBtn.classList.add("border-b-2", "border-blue-500", "text-blue-500");
+          userTab.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
         });
 
-        document
-          .getElementById("paymentForm")
-          .addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            if (!validateUserInfo()) {
-              alert("Please fill in all required fields correctly.");
-              return;
-            }
-
- 
-            const firstName = document.getElementById("firstName").value;
-            const lastName = document.getElementById("lastName").value;
-            const email = document.getElementById("email").value;
-            const phone = document.getElementById("phone").value;
-            const city = document.getElementById("city").value;
-            const address = document.getElementById("address").value;
-            const name = firstName + " " + lastName;
-
-            const remainingTime = parseInt(
-              localStorage.getItem("remainingTime"),
-              10
-            );
-            const amount = remainingTime > 0 ? 8000000 : 12000000; 
-
-            
-            fetch("order.php", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name,
-                email,
-                phone,
-                city,
-                address,
-                amount,
-              }),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                console.log("Order API Response:", data);
-
-                const options = {
-                  key: "rzp_test_J60bqBOi1z1aF5", 
-                  amount: data.amount,
-                  currency: "INR",
-                  name: "One Click Academy",
-                  description: "Digital Marketing Course Enrollment",
-                  order_id: data.id,
-                  handler: function (response) {
-                   
-                    fetch("verify.php", {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        payment_id: response.razorpay_payment_id,
-                        order_id: response.razorpay_order_id,
-                        signature: response.razorpay_signature,
-                        name,
-                        email,
-                        phone,
-                        city,
-                        address,
-                        amount,
-                      }),
-                    })
-                      .then((res) => res.json())
-                      .then((data) => {
-                        alert(data.message);
-                        console.log(data)
-                        window.location.href=data.redirect
-                        // localStorage.removeItem("remainingTime");
-                      });
-                  },
-                  prefill: {
-                    name,
-                    email,
-                    contact: phone,
-                  },
-                  theme: { color: "#3399cc" },
-                };
-
-                const rzp1 = new Razorpay(options);
-                rzp1.open();
-              });
-          });
-      });
-    </script>
-
-    <script>
-   
-      function validateUserInfo() {
-        const firstName = document.getElementById("firstName").value.trim();
-        const lastName = document.getElementById("lastName").value.trim();
-        const email = document.getElementById("email").value.trim();
-        const phone = document.getElementById("phone").value.trim();
-        const city = document.getElementById("city").value.trim();
-        const address = document.getElementById("address").value.trim();
-
-        let isValid = true;
-
-        // Clear previous error messages
-        document
-          .querySelectorAll(".error-message")
-          .forEach((el) => el.remove());
-
-        // Validate First Name
-        if (!firstName) {
-          showError("firstName", "First Name is required.");
-          isValid = false;
-        }
-
-        // Validate Last Name
-        if (!lastName) {
-          showError("lastName", "Last Name is required.");
-          isValid = false;
-        }
-
-        // Validate Email
-        if (!email) {
-          showError("email", "Email is required.");
-          isValid = false;
-        } else if (!validateEmail(email)) {
-          showError("email", "Please enter a valid email address.");
-          isValid = false;
-        }
-
-        // Validate Phone
-        if (!phone) {
-          showError("phone", "Phone is required.");
-          isValid = false;
-        } else if (!validatePhone(phone)) {
-          showError("phone", "Please enter a valid phone number.");
-          isValid = false;
-        }
-
-        // Validate City
-        if (!city) {
-          showError("city", "City is required.");
-          isValid = false;
-        }
-
-        // Validate Address
-        if (!address) {
-          showError("address", "Address is required.");
-          isValid = false;
-        }
-
-        return isValid;
-      }
-
-      // Helper function to display error messages
-      function showError(fieldId, message) {
-        const field = document.getElementById(fieldId);
-        const errorMessage = document.createElement("div");
-        errorMessage.className = "error-message text-red-500 text-sm mt-1";
-        errorMessage.textContent = message;
-        field.parentNode.appendChild(errorMessage);
-        field.classList.add("border-red-500");
-      }
-
-      // Helper function to validate email format
-      function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-      }
-
-      // Helper function to validate phone format (10 digits)
-      function validatePhone(phone) {
-        const phoneRegex = /^\d{10}$/;
-        return phoneRegex.test(phone);
-      }
-
-      document
-        .getElementById("paymentForm")
-        .addEventListener("submit", function (e) {
+        document.getElementById("paymentForm").addEventListener("submit", function (e) {
           e.preventDefault();
 
           if (!validateUserInfo()) {
@@ -453,7 +211,6 @@
             return;
           }
 
-          // Collect user data
           const firstName = document.getElementById("firstName").value;
           const lastName = document.getElementById("lastName").value;
           const email = document.getElementById("email").value;
@@ -461,17 +218,9 @@
           const city = document.getElementById("city").value;
           const address = document.getElementById("address").value;
           const name = firstName + " " + lastName;
+          const remainingTime = parseInt(localStorage.getItem("remainingTime"), 10);
+          const amount = remainingTime > 0 ? 8000000 : 12000000;
 
-          // Determine the amount based on the timer
-          const remainingTime = parseInt(
-            localStorage.getItem("remainingTime"),
-            10
-          );
-          const amount = remainingTime > 0 ? 80000*100 : 120000*100; // 80000 paise if timer is still running, else 120000 paise
-
-          console.log(amount);
-
-          // Call order.php to create an order
           fetch("order.php", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -479,8 +228,6 @@
           })
             .then((response) => response.json())
             .then((data) => {
-              console.log("Order API Response:", data);
-
               const options = {
                 key: "rzp_test_J60bqBOi1z1aF5",
                 amount: data.amount,
@@ -507,14 +254,9 @@
                     .then((res) => res.json())
                     .then((data) => {
                       alert(data.message);
-
-
-                      console.log(data)
-
                       if (data.message === "Payment successful") {
                         window.location.href = data.redirect;
                       }
-                     
                     });
                 },
                 prefill: {
@@ -529,6 +271,78 @@
               rzp1.open();
             });
         });
+      });
+    </script>
+
+    <script>
+      function validateUserInfo() {
+        const firstName = document.getElementById("firstName").value.trim();
+        const lastName = document.getElementById("lastName").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const city = document.getElementById("city").value.trim();
+        const address = document.getElementById("address").value.trim();
+
+        let isValid = true;
+        document.querySelectorAll(".error-message").forEach((el) => el.remove());
+
+        if (!firstName) {
+          showError("firstName", "First Name is required.");
+          isValid = false;
+        }
+
+        if (!lastName) {
+          showError("lastName", "Last Name is required.");
+          isValid = false;
+        }
+
+        if (!email) {
+          showError("email", "Email is required.");
+          isValid = false;
+        } else if (!validateEmail(email)) {
+          showError("email", "Please enter a valid email address.");
+          isValid = false;
+        }
+
+        if (!phone) {
+          showError("phone", "Phone is required.");
+          isValid = false;
+        } else if (!validatePhone(phone)) {
+          showError("phone", "Please enter a valid phone number.");
+          isValid = false;
+        }
+
+        if (!city) {
+          showError("city", "City is required.");
+          isValid = false;
+        }
+
+        if (!address) {
+          showError("address", "Address is required.");
+          isValid = false;
+        }
+
+        return isValid;
+      }
+
+      function showError(fieldId, message) {
+        const field = document.getElementById(fieldId);
+        const errorMessage = document.createElement("div");
+        errorMessage.className = "error-message text-red-500 text-sm mt-1";
+        errorMessage.textContent = message;
+        field.parentNode.appendChild(errorMessage);
+        field.classList.add("border-red-500");
+      }
+
+      function validateEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+
+      function validatePhone(phone) {
+        const phoneRegex = /^\d{10}$/;
+        return phoneRegex.test(phone);
+      }
     </script>
   </body>
 </html>

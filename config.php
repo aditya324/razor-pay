@@ -17,9 +17,8 @@ $key_secret = "uk935K7p4j96UCJgHK8kAU4q";
 
 
 $password="kmcyxkgpsnocrofp";
-$username="adityakulkarni54321@gmail.com"
-
-
+$username="adityakulkarni54321@gmail.com";
+$api_url = "https://api.razorpay.com/v1/orders";
 
 
 ?>
