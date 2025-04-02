@@ -3,5 +3,8 @@
         "razorpay/razorpay": "^2.9",
         "phpmailer/phpmailer": "^6.9",
         "vlucas/phpdotenv": "^5.6"
+    },
+    "require-dev": {
+        "kint-php/kint": "^6.0"
     }
 }

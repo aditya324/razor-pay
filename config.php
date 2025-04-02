@@ -11,12 +11,12 @@ if ($conn->connect_error) {
 }
 
 
-$key_id = "rzp_test_J60bqBOi1z1aF5";
-$key_secret = "uk935K7p4j96UCJgHK8kAU4q";
+$key_id = "rzp_test_3i3aUje3qXaxGE";
+$key_secret = "Hbf7IwNppbLlKLsVbIBpmyJo";
 
 
 
-$password="kmcyxkgpsnocrofp";
+$password="gcexrozggeaqwzmd";
 $username="adityakulkarni54321@gmail.com";
 $api_url = "https://api.razorpay.com/v1/orders";
 

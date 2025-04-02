@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '4ad944b90e9aad7f2349431ac325326321ac596b',
+        'reference' => 'a3794ed302c39f25aa198d4549d1f7911c7b7ae2',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '4ad944b90e9aad7f2349431ac325326321ac596b',
+            'reference' => 'a3794ed302c39f25aa198d4549d1f7911c7b7ae2',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -27,6 +27,15 @@
             'install_path' => __DIR__ . '/../graham-campbell/result-type',
             'aliases' => array(),
             'dev_requirement' => false,
+        ),
+        'kint-php/kint' => array(
+            'pretty_version' => '6.0.1',
+            'version' => '6.0.1.0',
+            'reference' => '2bd133be30a0d4f5523e3d7d8e94b788d95978e6',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../kint-php/kint',
+            'aliases' => array(),
+            'dev_requirement' => true,
         ),
         'phpmailer/phpmailer' => array(
             'pretty_version' => 'v6.9.3',

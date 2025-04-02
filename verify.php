@@ -1,89 +1,138 @@
 <?php
 header("Content-Type: application/json");
+// In production, restrict allowed origins to your trusted domain(s)
+// header("Access-Control-Allow-Origin: https://yourdomain.com");
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
+header("Access-Control-Allow-Headers: Content-Type, X-API-KEY");
 
 require('config.php'); 
-
 require 'vendor/autoload.php';
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-$data = json_decode(file_get_contents("php://input"), true);
+// Optional: Simple API key check
+$headers = getallheaders();
+if (!isset($headers['X-API-KEY']) || $headers['X-API-KEY'] !== 'your_secret_api_key') {
+    http_response_code(401);
+    echo json_encode(["error" => "Unauthorized"]);
+    exit;
+}
 
-$payment_id = $data['payment_id'];
-$order_id   = $data['order_id'];
-$signature  = $data['signature'];
-$name       = isset($data['name']) ? $data['name'] : '';
-$email      = isset($data['email']) ? $data['email'] : '';
-$phone      = isset($data['phone']) ? $data['phone'] : '';
-$city       = isset($data['city']) ? $data['city'] : '';
-$address    = isset($data['address']) ? $data['address'] : '';
-$amount     = isset($data['amount']) ? $data['amount'] : 0;
+// Retrieve and decode JSON input
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode(["error" => "Invalid JSON input"]);
+    exit;
+}
 
+// Validate required fields
+if (!isset($data['payment_id'], $data['order_id'], $data['signature'])) {
+    http_response_code(400);
+    echo json_encode(["error" => "Missing required payment fields"]);
+    exit;
+}
+
+// Sanitize required inputs
+$payment_id = filter_var($data['payment_id'], FILTER_SANITIZE_STRING);
+$order_id   = filter_var($data['order_id'], FILTER_SANITIZE_STRING);
+$signature  = filter_var($data['signature'], FILTER_SANITIZE_STRING);
+
+// Validate and sanitize optional fields
+$name    = isset($data['name'])    ? filter_var($data['name'], FILTER_SANITIZE_STRING) : '';
+$email   = isset($data['email'])   ? filter_var($data['email'], FILTER_VALIDATE_EMAIL) : '';
+$phone   = isset($data['phone'])   ? filter_var($data['phone'], FILTER_SANITIZE_STRING) : '';
+$city    = isset($data['city'])    ? filter_var($data['city'], FILTER_SANITIZE_STRING) : '';
+$address = isset($data['address']) ? filter_var($data['address'], FILTER_SANITIZE_STRING) : '';
+$amount  = isset($data['amount'])  ? filter_var($data['amount'], FILTER_VALIDATE_FLOAT) : 0;
+$mode    = isset($data['mode'])    ? filter_var($data['mode'], FILTER_SANITIZE_STRING) : '';
+
+// Ensure amount is valid
+if ($amount === false) {
+    http_response_code(400);
+    echo json_encode(["error" => "Invalid amount"]);
+    exit;
+}
+
+// Convert amount to rupees (assuming the amount is in paisa)
 $toRupees = $amount / 100;
 
+// Verify the payment signature using key_secret from config.php
 $generated_signature = hash_hmac("sha256", $order_id . "|" . $payment_id, $key_secret);
+if ($generated_signature !== $signature) {
+    http_response_code(400);
+    echo json_encode(["error" => "Payment verification failed"]);
+    exit;
+}
 
-if ($generated_signature === $signature) {
-    
-    $stmt = $conn->prepare("INSERT INTO payments (order_id, payment_id, name, email, phone, city, address, amount, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $status = "success";  
-    $stmt->bind_param("sssssssis", $order_id, $payment_id, $name, $email, $phone, $city, $address, $toRupees, $status);
-    
-    if ($stmt->execute()) {
-     
-        $mail = new PHPMailer(true); 
-        
-        try {
-            $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com'; 
-            $mail->SMTPAuth   = true;
-            $mail->Username   = $username; 
-            $mail->Password   = $password; 
-            $mail->SMTPSecure = 'tls';            
-            $mail->Port       = 587;              
+// Prepare the SQL statement using prepared statements
+$stmt = $conn->prepare("INSERT INTO payments (order_id, payment_id, name, email, phone, city, address, amount, status, mode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+if (!$stmt) {
+    http_response_code(500);
+    echo json_encode(["error" => "Database error", "details" => $conn->error]);
+    exit;
+}
 
-            $mail->setFrom('oneclickacademy@gmail.com', 'One Click Academy');
-            $mail->addAddress($email, $name);
+$status = "success";
+$stmt->bind_param("sssssssiss", $order_id, $payment_id, $name, $email, $phone, $city, $address, $toRupees, $status, $mode);
 
-            // Set email format to HTML
-            $mail->isHTML(true);
-            $mail->Subject = 'Payment Confirmation';
-            
-         
-            $mail->addEmbeddedImage('./images/oneclicklogo.png', 'logo_cid'); 
+if (!$stmt->execute()) {
+    http_response_code(500);
+    echo json_encode(["error" => "Payment Failed", "details" => $stmt->error]);
+    exit;
+}
+$stmt->close();
 
-            $mail->Body = "
-                <html>
-                <body>
-                    <img src='cid:logo_cid' alt='Logo' style='width:150px;'><br><br>
-                    Dear $name,<br><br>
-                    Thank you for your purchase. Your payment details are as follows:<br><br>
-                    <strong>Payment ID:</strong> $payment_id<br>
-                    <strong>Order ID:</strong> $order_id<br>
-                    <strong>Amount:</strong> $toRupees rupees<br>
-                    <strong>Address:</strong> $address<br>
-                    <strong>City:</strong> $city<br><br>
-                    We appreciate your business.<br><br>
-                    Best regards,<br>
-                    One Click Academy
-                </body>
-                </html>
-            ";
+// Setup PHPMailer to send the confirmation email
+$mail = new PHPMailer(true);
+try {
+    $mail->isSMTP();
+    $mail->Host       = 'smtp.gmail.com';
+    $mail->SMTPAuth   = true;
+    $mail->Username   = $username; // from config.php
+    $mail->Password   = $password; // from config.php
+    $mail->SMTPSecure = 'tls';
+    $mail->Port       = 587;
 
-            $mail->send();
-            echo json_encode(["message" => "Payment successful", "redirect" => "https://oneclickacademy.com/"]);
-        } catch (Exception $e) {
-            echo json_encode(["message" => "Payment successful, but email sending failed", "error" => $mail->ErrorInfo]);
-        }
-    } else {
-        echo json_encode(["message" => "Payment Failed", "error" => $stmt->error]);
+    $mail->setFrom('oneclickacademy@gmail.com', 'One Click Academy');
+    if ($email) {
+        $mail->addAddress($email, $name);
     }
+
+    $mail->isHTML(true);
+    $mail->Subject = 'Payment Confirmation';
     
-    $stmt->close();
-} else {
-    echo json_encode(["message" => "Payment verification failed"]);
+    // Embed the logo image (ensure the file exists at the given path)
+    $mail->addEmbeddedImage('./images/oneclicklogo.png', 'logo_cid');
+
+    // Build the email body using htmlspecialchars() to prevent HTML injection
+    $mail->Body = "
+        <html>
+        <body>
+            <img src='cid:logo_cid' alt='Logo' style='width:150px;'><br><br>
+            Dear " . htmlspecialchars($name) . ",<br><br>
+            Thank you for your purchase. Your payment details are as follows:<br><br>
+            <strong>Payment ID:</strong> " . htmlspecialchars($payment_id) . "<br>
+            <strong>Order ID:</strong> " . htmlspecialchars($order_id) . "<br>
+            <strong>Email:</strong> " . htmlspecialchars($email) . "<br>
+            <strong>Phone no:</strong> " . htmlspecialchars($phone) . "<br>
+            <strong>Mode of Teaching:</strong> " . htmlspecialchars($mode) . "<br>
+            <strong>Amount:</strong> " . htmlspecialchars($toRupees) . " rupees<br>
+            <strong>Address:</strong> " . htmlspecialchars($address) . "<br>
+            <strong>City:</strong> " . htmlspecialchars($city) . "<br><br>
+            We appreciate your business.<br><br>
+            Best regards,<br>
+            OneClick Academy
+        </body>
+        </html>
+    ";
+
+    $mail->send();
+    echo json_encode(["message" => "Payment successful", "redirect" => "https://oneclickacademy.com/"]);
+} catch (Exception $e) {
+    echo json_encode(["message" => "Payment successful, but email sending failed", "error" => $mail->ErrorInfo]);
 }
 ?>
