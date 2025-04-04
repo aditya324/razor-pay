@@ -6,12 +6,19 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, X-API-KEY");
 
-require('config.php'); // Ensure this file is stored securely and outside the web root if possible.
 require 'vendor/autoload.php';
+
+// Load environment variables from .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Retrieve API credentials from environment variables
+$key_id = $_ENV['RAZORPAY_KEY_ID'];
+$key_secret = $_ENV['RAZORPAY_KEY_SECRET'];
 
 // Simple API key check (customize as needed)
 $headers = getallheaders();
-if (!isset($headers['X-API-KEY']) || $headers['X-API-KEY'] !== 'your_secret_api_key') {
+if (!isset($headers['X-API-KEY']) || $headers['X-API-KEY'] !== 'Hbf7IwNppbLlKLsVbIBpmyJo') {
     http_response_code(401);
     echo json_encode(["error" => "Unauthorized"]);
     exit;
@@ -30,7 +37,9 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 $name = isset($data['name']) ? filter_var($data['name'], FILTER_SANITIZE_STRING) : null;
 $email = isset($data['email']) ? filter_var($data['email'], FILTER_VALIDATE_EMAIL) : null;
 $phone = isset($data['phone']) ? filter_var($data['phone'], FILTER_SANITIZE_STRING) : null;
-$amount = isset($data['amount']) ? filter_var($data['amount'], FILTER_VALIDATE_FLOAT) : null;
+$amount = isset($data['amount']) ? (int)$data['amount'] : 0;
+
+
 $mode = isset($data['mode']) ? filter_var($data['mode'], FILTER_SANITIZE_STRING) : null;
 
 // Check that required fields are valid
@@ -40,6 +49,8 @@ if (!$name || !$email || !$phone || !$amount) {
     exit;
 }
 
+
+error_log("Received amount: " . $amount);
 // Optionally log non-sensitive operational data (avoid logging sensitive fields)
 // error_log("Order mode: " . $mode);
 

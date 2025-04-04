@@ -6,15 +6,31 @@ header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, X-API-KEY");
 
-require('config.php'); 
 require 'vendor/autoload.php';
+
+// Load environment variables from .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Database connection using environment variables
+$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(["error" => "Database connection failed", "details" => $conn->connect_error]);
+    exit;
+}
+
+// Retrieve API and SMTP credentials from .env
+$key_secret = $_ENV['RAZORPAY_KEY_SECRET'];
+$smtp_username = $_ENV['SMTP_USERNAME'];
+$smtp_password = $_ENV['SMTP_PASSWORD'];
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 // Optional: Simple API key check
 $headers = getallheaders();
-if (!isset($headers['X-API-KEY']) || $headers['X-API-KEY'] !== 'your_secret_api_key') {
+if (!isset($headers['X-API-KEY']) || $headers['X-API-KEY'] !== 'Hbf7IwNppbLlKLsVbIBpmyJo') {
     http_response_code(401);
     echo json_encode(["error" => "Unauthorized"]);
     exit;
@@ -60,7 +76,7 @@ if ($amount === false) {
 // Convert amount to rupees (assuming the amount is in paisa)
 $toRupees = $amount / 100;
 
-// Verify the payment signature using key_secret from config.php
+// Verify the payment signature using key_secret from .env
 $generated_signature = hash_hmac("sha256", $order_id . "|" . $payment_id, $key_secret);
 if ($generated_signature !== $signature) {
     http_response_code(400);
@@ -92,8 +108,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'smtp.gmail.com';
     $mail->SMTPAuth   = true;
-    $mail->Username   = $username; // from config.php
-    $mail->Password   = $password; // from config.php
+    $mail->Username   = $smtp_username;
+    $mail->Password   = $smtp_password;
     $mail->SMTPSecure = 'tls';
     $mail->Port       = 587;
 
@@ -131,7 +147,18 @@ try {
     ";
 
     $mail->send();
-    echo json_encode(["message" => "Payment successful", "redirect" => "https://oneclickacademy.com/"]);
+    echo json_encode([
+        "message" => "Payment successful",
+        "redirect" => "success.html",
+        "data" => [
+            "name" => $name,
+            "email" => $email,
+            "phone" => $phone,
+            "city" => $city,
+            "order_id" => $order_id,
+            "address" => $address
+        ]
+    ]);
 } catch (Exception $e) {
     echo json_encode(["message" => "Payment successful, but email sending failed", "error" => $mail->ErrorInfo]);
 }

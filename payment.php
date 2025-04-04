@@ -7,6 +7,14 @@
   <title>One Click Academy - Digital Marketing Course Enrollment</title>
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+
+
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/react-hot-toast@4.3.3/dist/toast.css">
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/react-hot-toast@4.3.3/dist/toast.umd.js"></script>
 </head>
 
 <body class="bg-gradient-to-r from-blue-100 to-indigo-100 px-5 lg:px-0">
@@ -174,155 +182,174 @@
     });
   </script>
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-  // Example tab switching logic (if applicable)
-  const userTab = document.getElementById("userTab");
-  const paymentTabBtn = document.getElementById("paymentTabBtn");
-  const userInfoTab = document.getElementById("userInfoTab");
-  const paymentInfoTab = document.getElementById("paymentInfoTab");
-  const toPaymentTab = document.getElementById("toPaymentTab");
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      // Example tab switching logic (if applicable)
+      const userTab = document.getElementById("userTab");
+      const paymentTabBtn = document.getElementById("paymentTabBtn");
+      const userInfoTab = document.getElementById("userInfoTab");
+      const paymentInfoTab = document.getElementById("paymentInfoTab");
+      const toPaymentTab = document.getElementById("toPaymentTab");
 
-  if (toPaymentTab) {
-    toPaymentTab.addEventListener("click", function () {
-      if (!validateUserInfo()) {
-        alert("Please fill in all required fields correctly.");
-        return;
+      if (toPaymentTab) {
+        toPaymentTab.addEventListener("click", function() {
+          if (!validateUserInfo()) {
+            alert("Please fill in all required fields correctly.");
+            return;
+          }
+          userInfoTab.classList.add("hidden");
+          paymentInfoTab.classList.remove("hidden");
+          userTab.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
+          paymentTabBtn.classList.add("border-b-2", "border-blue-500", "text-blue-500");
+        });
       }
-      userInfoTab.classList.add("hidden");
-      paymentInfoTab.classList.remove("hidden");
-      userTab.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
-      paymentTabBtn.classList.add("border-b-2", "border-blue-500", "text-blue-500");
-    });
-  }
 
-  userTab.addEventListener("click", function () {
-    userInfoTab.classList.remove("hidden");
-    paymentInfoTab.classList.add("hidden");
-    userTab.classList.add("border-b-2", "border-blue-500", "text-blue-500");
-    paymentTabBtn.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
-  });
+      userTab.addEventListener("click", function() {
+        userInfoTab.classList.remove("hidden");
+        paymentInfoTab.classList.add("hidden");
+        userTab.classList.add("border-b-2", "border-blue-500", "text-blue-500");
+        paymentTabBtn.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
+      });
 
-  paymentTabBtn.addEventListener("click", function () {
-    if (!validateUserInfo()) {
-      alert("Please fill in all required fields before proceeding to payment.");
-      return;
-    }
-    userInfoTab.classList.add("hidden");
-    paymentInfoTab.classList.remove("hidden");
-    paymentTabBtn.classList.add("border-b-2", "border-blue-500", "text-blue-500");
-    userTab.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
-  });
+      paymentTabBtn.addEventListener("click", function() {
+        if (!validateUserInfo()) {
+          alert("Please fill in all required fields before proceeding to payment.");
+          return;
+        }
+        userInfoTab.classList.add("hidden");
+        paymentInfoTab.classList.remove("hidden");
+        paymentTabBtn.classList.add("border-b-2", "border-blue-500", "text-blue-500");
+        userTab.classList.remove("border-b-2", "border-blue-500", "text-blue-500");
+      });
 
-  // Payment form submission handler
-  document.getElementById("paymentForm").addEventListener("submit", function (e) {
-    e.preventDefault();
+      // Payment form submission handler
+      document.getElementById("paymentForm").addEventListener("submit", function(e) {
+        e.preventDefault();
 
-    if (!validateUserInfo()) {
-      alert("Please fill in all required fields correctly.");
-      return;
-    }
+        if (!validateUserInfo()) {
+          alert("Please fill in all required fields correctly.");
+          return;
+        }
 
-    // Get form values
-    const firstName = document.getElementById("firstName").value;
-    const lastName  = document.getElementById("lastName").value;
-    const email     = document.getElementById("email").value;
-    const phone     = document.getElementById("phone").value;
-    const city      = document.getElementById("city").value;
-    const address   = document.getElementById("address").value;
-    const course    = document.getElementById("course") ? document.getElementById("course").value : "DefaultCourse";
-    const mode      = document.getElementById("mode").value; // online or offline
+        // Get form values
+        const firstName = document.getElementById("firstName").value;
+        const lastName = document.getElementById("lastName").value;
+        const email = document.getElementById("email").value;
+        const phone = document.getElementById("phone").value;
+        const city = document.getElementById("city").value;
+        const address = document.getElementById("address").value;
+        const course = document.getElementById("course") ? document.getElementById("course").value : "DefaultCourse";
+        const mode = document.getElementById("mode").value; // online or offline
 
-    // Set amount based on mode: online => ₹60,000, offline => ₹80,000 (in paisa)
-    const amount = mode === "online" ? 6000000 : 8000000;
-
-    // Create order by sending details to order.php
-    fetch("order.php", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: firstName + " " + lastName,
-        email: email,
-        phone: phone,
-        city: city,
-        address: address,
-        amount: amount,
-        mode: mode
-      })
-    })
-    .then(response => response.json())
-    .then(orderData => {
-      // orderData is expected to have properties like id and amount.
-
-      console.log(orderData)
-      const options = {
-        key: "rzp_test_3i3aUje3qXaxGE",
-        amount: orderData.amount,
-        currency: "INR",
-        name: "One Click Academy",
-        description: "Digital Marketing Course Enrollment",
-        order_id: orderData.id,
-        handler: function(response) {
-          // Payment successful handler: verify the payment on your server
-          fetch("verify.php", {
+        // Set amount based on mode: online => ₹60,000, offline => ₹80,000 (in paisa)
+        const amount = mode === "online" ? 6000000 : 8000000;
+        console.log("Amount:", amount);
+        // Create order by sending details to order.php
+        fetch("order.php", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-KEY": "Hbf7IwNppbLlKLsVbIBpmyJo" // Ensure this matches what your server expects
+            },
             body: JSON.stringify({
-              payment_id: response.razorpay_payment_id,
-              order_id: response.razorpay_order_id,
-              signature: response.razorpay_signature,
               name: firstName + " " + lastName,
               email: email,
               phone: phone,
               city: city,
               address: address,
-              course: course,
               amount: amount,
               mode: mode
             })
           })
-          .then(res => res.json())
-          .then(data => {
-            alert(data.message);
-            // Optionally, you can redirect the user on success.
-          });
-        },
-        prefill: {
-          name: firstName + " " + lastName,
-          email: email,
-          contact: phone
-        },
-        theme: { color: "#3399cc" },
-        modal: {
-          ondismiss: function() {
-            // When the Razorpay widget is closed, ask the user if they want to cancel the payment.
-            if (window.confirm("Do you want to quit payment?")) {
-              // Build query parameters for failure.php
-              const params = new URLSearchParams({
-                order_id: orderData.id,
+          .then(response => response.json())
+          .then(orderData => {
+            // orderData is expected to have properties like id and amount.
+
+            console.log(orderData)
+            const options = {
+              key: "rzp_test_3i3aUje3qXaxGE",
+              amount: orderData.amount,
+              currency: "INR",
+              name: "One Click Academy",
+              description: "Digital Marketing Course Enrollment",
+              order_id: orderData.id,
+              handler: function(response) {
+                // Payment successful handler: verify the payment on your server
+                fetch("verify.php", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      "X-API-KEY": "Hbf7IwNppbLlKLsVbIBpmyJo"
+                    },
+                    body: JSON.stringify({
+                      payment_id: response.razorpay_payment_id,
+                      order_id: response.razorpay_order_id,
+                      signature: response.razorpay_signature,
+                      name: firstName + " " + lastName,
+                      email: email,
+                      phone: phone,
+                      city: city,
+                      address: address,
+                      course: course,
+                      amount: amount,
+                      mode: mode
+                    })
+                  })
+                  .then(res => res.json())
+                  .then(data => {
+
+                    console.log(data);
+                    sessionStorage.setItem('orderResponse', JSON.stringify(data.data));
+
+                    alert(data.message);
+                    if (data.redirect) {
+                      try {
+                        const params = new URLSearchParams(data.data).toString();
+                        window.location.href = `${data.redirect}`;
+                      } catch (e) {
+                        console.error("Redirect failed:", e);
+                      }
+                    }
+                  });
+              },
+              prefill: {
                 name: firstName + " " + lastName,
                 email: email,
-                phone: phone,
-                city: city,
-                address: address,
-                course: course,
-                amount: amount
-              });
-              window.location.href = "failure.php?" + params.toString();
-            }
-          }
-        }
-      };
+                contact: phone
+              },
+              theme: {
+                color: "#3399cc"
+              },
+              modal: {
+                ondismiss: function() {
+                  // When the Razorpay widget is closed, ask the user if they want to cancel the payment.
+                  if (window.confirm("Do you want to quit payment?")) {
+                    // Build query parameters for failure.php
+                    const params = new URLSearchParams({
+                      order_id: orderData.id,
+                      name: firstName + " " + lastName,
+                      email: email,
+                      phone: phone,
+                      city: city,
+                      address: address,
+                      course: course,
+                      amount: amount
+                    });
+                    window.location.href = "failure.php?" + params.toString();
+                  }
+                }
+              }
+            };
 
-      const rzp1 = new Razorpay(options);
-      rzp1.open();
-    })
-    .catch(error => {
-      console.error("Error creating order:", error);
+            const rzp1 = new Razorpay(options);
+            rzp1.open();
+          })
+          .catch(error => {
+            console.error("Error creating order:", error);
+          });
+      });
     });
-  });
-});
-</script>
+  </script>
 
 
   <script>
