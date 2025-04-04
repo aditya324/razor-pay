@@ -163,3 +163,11 @@ try {
     echo json_encode(["message" => "Payment successful, but email sending failed", "error" => $mail->ErrorInfo]);
 }
 ?>
+
+
+
+
+
+
+
+
