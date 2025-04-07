@@ -1,0 +1,1 @@
+{"order_id":"order_QG9SOITtlBNtv8","name":"aditya kulkarni","email":"adityakulkarni54321@gmail.com","phone":"9686851611","address":"abcd","course":"DigitalMarketingCourse","amount":6120000,"mode":"online"}
