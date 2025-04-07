@@ -18,12 +18,16 @@ $key_secret = $_ENV['RAZORPAY_KEY_SECRET'];
 
 // Simple API key check (customize as needed)
 $headers = getallheaders();
-if (!isset($headers['X-API-KEY']) || $headers['X-API-KEY'] !== 'Hbf7IwNppbLlKLsVbIBpmyJo') {
+$apiKey = $headers['X-API-KEY'] 
+    ?? $headers['x-api-key'] 
+    ?? $_SERVER['HTTP_X_API_KEY'] 
+    ?? null;
+
+if ($apiKey !== 'hDRFkvaUct0SONDDFzMjyQHC') {
     http_response_code(401);
-    echo json_encode(["error" => "Unauthorized"]);
+    echo json_encode(["error" => "Unauthorized auth key error"]);
     exit;
 }
-
 // Retrieve and decode JSON input
 $input = file_get_contents("php://input");
 $data = json_decode($input, true);
@@ -34,21 +38,35 @@ if (json_last_error() !== JSON_ERROR_NONE) {
 }
 
 // Validate and sanitize input fields
-$name = isset($data['name']) ? filter_var($data['name'], FILTER_SANITIZE_STRING) : null;
+$name = isset($data['name']) ? trim(filter_var($data['name'], FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW | FILTER_FLAG_STRIP_HIGH)) : null;
 $email = isset($data['email']) ? filter_var($data['email'], FILTER_VALIDATE_EMAIL) : null;
-$phone = isset($data['phone']) ? filter_var($data['phone'], FILTER_SANITIZE_STRING) : null;
+$phone = isset($data['phone']) ? preg_replace('/[^0-9+]/', '', $data['phone']) : null;
 $amount = isset($data['amount']) ? (int)$data['amount'] : 0;
-
-
 $mode = isset($data['mode']) ? filter_var($data['mode'], FILTER_SANITIZE_STRING) : null;
 
-// Check that required fields are valid
-if (!$name || !$email || !$phone || !$amount) {
-    http_response_code(400);
-    echo json_encode(["error" => "Missing or invalid required fields"]);
-    exit;
+// Enhanced validation checks
+$errors = [];
+if (!$name || strlen($name) < 2 || strlen($name) > 100 || !preg_match('/^[\p{L}\p{M}\s.\'-]+$/u', $name)) {
+    $errors[] = "Name must be 2-100 characters with only letters, spaces, hyphens, apostrophes or periods";
 }
 
+if (!$email) {
+    $errors[] = "Invalid email address";
+}
+
+if (!$phone || !preg_match('/^[0-9+]{10,15}$/', $phone)) {
+    $errors[] = "Phone must be 10-15 digits (may include + prefix)";
+}
+
+if ($amount <= 0) {
+    $errors[] = "Amount must be a positive number";
+}
+
+if (!empty($errors)) {
+    http_response_code(400);
+    echo json_encode(["error" => "Validation failed", "details" => $errors]);
+    exit;
+}
 
 error_log("Received amount: " . $amount);
 // Optionally log non-sensitive operational data (avoid logging sensitive fields)
