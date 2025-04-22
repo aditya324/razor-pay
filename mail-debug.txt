@@ -1,1 +1,330 @@
-{"order_id":"order_QJEV0DSQlNdAuW","name":"aditya kulkarni","email":"adityakulkarni54321@gmail.com","phone":"9686851611","address":"abdc","course":"DigitalMarketingCourse","amount":6120000,"mode":"online"}
+ALTER TABLE payments ADD COLUMN coupon_code VARCHAR(50) DEFAULT NULL;
+ALTER TABLE payments ADD COLUMN discount_amount DECIMAL(10,2) DEFAULT 0;
+ALTER TABLE payments ADD COLUMN original_amount DECIMAL(10,2) DEFAULT 0;
+
+CREATE TABLE coupons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(50) UNIQUE NOT NULL,
+    discount_amount DECIMAL(10,2) NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE,
+    is_used BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- Insert your special coupon (run this once)
+INSERT INTO coupons (code, discount_amount) 
+VALUES ('SPECIALDISCOUNT', 59000); 
+
+
+<?php
+header("Content-Type: application/json");
+require 'vendor/autoload.php';
+require 'db-connection.php';
+
+// Load environment variables from .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Database connection using environment variables
+$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(["error" => "Database connection failed", "details" => $conn->connect_error]);
+    exit;
+}
+
+// Retrieve API and SMTP credentials from .env
+$key_secret = $_ENV['RAZORPAY_KEY_SECRET'];
+$smtp_username = $_ENV['SMTP_USERNAME'];
+$smtp_password = $_ENV['SMTP_PASSWORD'];
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
+// API key check
+$headers = getallheaders();
+$apiKey = $headers['X-API-KEY'] 
+    ?? $headers['x-api-key'] 
+    ?? $_SERVER['HTTP_X_API_KEY'] 
+    ?? null;
+
+if ($apiKey !== 'hDRFkvaUct0SONDDFzMjyQHC') {
+    http_response_code(401);
+    echo json_encode(["error" => "Unauthorized auth key error"]);
+    exit;
+}
+
+// Retrieve and decode JSON input
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
+if (json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode(["error" => "Invalid JSON input"]);
+    exit;
+}
+
+// Validate required fields
+if (!isset($data['payment_id'], $data['order_id'], $data['signature'])) {
+    http_response_code(400);
+    echo json_encode(["error" => "Missing required payment fields"]);
+    exit;
+}
+
+// Sanitize inputs
+$payment_id = filter_var($data['payment_id'], FILTER_SANITIZE_STRING);
+$order_id   = filter_var($data['order_id'], FILTER_SANITIZE_STRING);
+$signature  = filter_var($data['signature'], FILTER_SANITIZE_STRING);
+$coupon_code = isset($data['couponCode']) ? filter_var($data['couponCode'], FILTER_SANITIZE_STRING) : null;
+
+// Validate and sanitize optional fields
+$name    = isset($data['name'])    ? filter_var($data['name'], FILTER_SANITIZE_STRING) : '';
+$email   = isset($data['email'])   ? filter_var($data['email'], FILTER_VALIDATE_EMAIL) : '';
+$phone   = isset($data['phone'])   ? filter_var($data['phone'], FILTER_SANITIZE_STRING) : '';
+$city    = isset($data['city'])    ? filter_var($data['city'], FILTER_SANITIZE_STRING) : '';
+$address = isset($data['address']) ? filter_var($data['address'], FILTER_SANITIZE_STRING) : '';
+$amount  = isset($data['amount'])  ? filter_var($data['amount'], FILTER_VALIDATE_FLOAT) : 0;
+$mode    = isset($data['mode'])    ? filter_var($data['mode'], FILTER_SANITIZE_STRING) : '';
+
+if ($amount === false) {
+    http_response_code(400);
+    echo json_encode(["error" => "Invalid amount"]);
+    exit;
+}
+
+// Verify payment signature
+$generated_signature = hash_hmac("sha256", $order_id . "|" . $payment_id, $key_secret);
+if ($generated_signature !== $signature) {
+    http_response_code(400);
+    echo json_encode(["error" => "Payment verification failed"]);
+    exit;
+}
+
+// Start transaction
+$conn->begin_transaction();
+
+try {
+    $original_amount = $amount;
+    $discount_amount = 0;
+    $final_amount = $amount / 100; // Convert to rupees
+    
+    // Handle coupon if provided
+    if ($coupon_code) {
+        // Lock coupon row for update
+        $stmt = $conn->prepare("
+            SELECT * FROM coupons 
+            WHERE code = ? 
+            AND is_active = TRUE
+            AND is_used = FALSE
+            FOR UPDATE
+        ");
+        $stmt->bind_param("s", $coupon_code);
+        $stmt->execute();
+        $coupon = $stmt->get_result()->fetch_assoc();
+        
+        if (!$coupon) {
+            throw new Exception("Invalid or already used coupon code");
+        }
+        
+        // Apply discount
+        $discount_amount = $coupon['discount_amount'];
+        $final_amount = ($amount / 100) - $discount_amount;
+        
+        // Mark coupon as used
+        $updateStmt = $conn->prepare("
+            UPDATE coupons 
+            SET is_used = TRUE 
+            WHERE code = ?
+        ");
+        $updateStmt->bind_param("s", $coupon_code);
+        $updateStmt->execute();
+    }
+    
+    // Insert payment record
+    $stmt = $conn->prepare("
+        INSERT INTO payments 
+        (order_id, payment_id, name, email, phone, city, address, amount, original_amount, discount_amount, status, mode, coupon_code) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    $status = "success";
+    $stmt->bind_param(
+        "sssssssddssss", 
+        $order_id, 
+        $payment_id, 
+        $name, 
+        $email, 
+        $phone, 
+        $city, 
+        $address, 
+        $final_amount,
+        $original_amount / 100,
+        $discount_amount,
+        $status,
+        $mode,
+        $coupon_code
+    );
+    
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to save payment record: " . $stmt->error);
+    }
+    
+    // Send confirmation email
+    $mail = new PHPMailer(true);
+    try {
+        $mail->isSMTP();
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
+        $mail->Username   = $smtp_username;
+        $mail->Password   = $smtp_password;
+        $mail->SMTPSecure = 'tls';
+        $mail->Port       = 587;
+
+        $mail->setFrom('oneclickacademy@gmail.com', 'One Click Academy');
+        if ($email) {
+            $mail->addAddress($email, $name);
+        }
+
+        $mail->isHTML(true);
+        $mail->Subject = 'Payment Confirmation';
+        $mail->addEmbeddedImage('./images/oneclicklogo.png', 'logo_cid');
+
+        // Build email body with coupon information
+        $emailBody = "
+            <html>
+            <body>
+                <img src='cid:logo_cid' alt='Logo' style='width:150px;'><br><br>
+                Dear " . htmlspecialchars($name) . ",<br><br>
+                Thank you for your purchase. Your payment details are as follows:<br><br>
+                <strong>Payment ID:</strong> " . htmlspecialchars($payment_id) . "<br>
+                <strong>Order ID:</strong> " . htmlspecialchars($order_id) . "<br>";
+        
+        if ($coupon_code) {
+            $emailBody .= "
+                <strong>Coupon Code:</strong> " . htmlspecialchars($coupon_code) . "<br>
+                <strong>Discount Applied:</strong> ₹" . number_format($discount_amount, 2) . "<br>";
+        }
+        
+        $emailBody .= "
+                <strong>Amount Paid:</strong> ₹" . number_format($final_amount, 2) . "<br>
+                <strong>Email:</strong> " . htmlspecialchars($email) . "<br>
+                <strong>Phone no:</strong> " . htmlspecialchars($phone) . "<br>
+                <strong>Mode of Teaching:</strong> " . htmlspecialchars($mode) . "<br>
+                <strong>Address:</strong> " . htmlspecialchars($address) . "<br>
+                <strong>City:</strong> " . htmlspecialchars($city) . "<br><br>
+                We appreciate your business.<br><br>
+                Best regards,<br>
+                OneClick Academy
+            </body>
+            </html>
+        ";
+        
+        $mail->Body = $emailBody;
+        $mail->send();
+    } catch (Exception $e) {
+        // Log email error but don't fail the transaction
+        error_log("Email sending failed: " . $e->getMessage());
+    }
+    
+    $conn->commit();
+    
+    echo json_encode([
+        "message" => "Payment successful",
+        "redirect" => "success.html",
+        "data" => [
+            "name" => $name,
+            "email" => $email,
+            "phone" => $phone,
+            "city" => $city,
+            "order_id" => $order_id,
+            "address" => $address,
+            "amount" => $final_amount,
+            "discount" => $discount_amount,
+            "coupon_code" => $coupon_code
+        ]
+    ]);
+    
+} catch (Exception $e) {
+    $conn->rollback();
+    http_response_code(400);
+    echo json_encode(["error" => $e->getMessage()]);
+}
+?>
+
+<!-- Add this before the payment button -->
+<div class="mt-6">
+  <label for="couponCode" class="block text-gray-700 font-medium">Coupon Code</label>
+  <div class="flex gap-2 mt-1">
+    <input
+      type="text"
+      id="couponCode"
+      name="couponCode"
+      class="w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+      placeholder="Enter coupon code if available"
+    />
+    <button 
+      type="button" 
+      id="applyCouponBtn" 
+      class="bg-gray-200 hover:bg-gray-300 px-4 rounded"
+    >
+      Apply
+    </button>
+  </div>
+  <div id="couponMessage" class="text-sm mt-1"></div>
+</div>
+
+
+// Coupon system
+document.addEventListener("DOMContentLoaded", function() {
+  const couponCodeInput = document.getElementById("couponCode");
+  const applyCouponBtn = document.getElementById("applyCouponBtn");
+  const couponMessage = document.getElementById("couponMessage");
+  const courseFeeElement = document.getElementById("courseFee");
+  
+  let appliedCoupon = null;
+
+  applyCouponBtn.addEventListener("click", function() {
+    const couponCode = couponCodeInput.value.trim();
+    
+    if (!couponCode) {
+      couponMessage.textContent = "Please enter a coupon code";
+      couponMessage.className = "text-sm mt-1 text-red-500";
+      return;
+    }
+    
+    // In a real implementation, you would validate via API
+    // For this example, we'll just check for the hardcoded coupon
+    if (couponCode.toUpperCase() === "SPECIALDISCOUNT") {
+      appliedCoupon = {
+        code: couponCode,
+        discount: 59000 // 140,000 - 81,000
+      };
+      couponMessage.textContent = "Coupon applied successfully!";
+      couponMessage.className = "text-sm mt-1 text-green-500";
+      courseFeeElement.textContent = "₹81,000";
+      
+      // Disable coupon field after successful application
+      couponCodeInput.disabled = true;
+      applyCouponBtn.disabled = true;
+    } else {
+      appliedCoupon = null;
+      couponMessage.textContent = "Invalid coupon code";
+      couponMessage.className = "text-sm mt-1 text-red-500";
+      courseFeeElement.textContent = "₹140,000";
+    }
+  });
+  
+  // Update form submission to include coupon
+  document.getElementById("paymentForm").addEventListener("submit", function(e) {
+    if (appliedCoupon) {
+      // Add hidden input with coupon code
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = "couponCode";
+      input.value = appliedCoupon.code;
+      this.appendChild(input);
+    }
+    
+    // Your existing form submission logic...
+  });
+});
+
