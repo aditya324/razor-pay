@@ -58,12 +58,12 @@
                 </button>
               </a>
               <!-- id="videoBtn" -->
-              <button  class="border border-orange-400 text-orange-500 hover:bg-orange-50 font-medium py-3 lg:px-8 rounded-full w-32 md:w-48 text-sm lg:text-lg flex justify-center items-center transition duration-300">
+              <!-- <button  class="border border-orange-400 text-orange-500 hover:bg-orange-50 font-medium py-3 lg:px-8 rounded-full w-32 md:w-48 text-sm lg:text-lg flex justify-center items-center transition duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                   <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"/>
                 </svg>
                 Our Videos
-              </button>
+              </button> -->
             </div>
 
 
@@ -843,37 +843,58 @@
       </div>
 
 
-      <div class="container mx-auto px-4 py-12 max-w-6xl">
-        <div class="flex flex-col md:flex-row items-start justify-between gap-8">
-            <!-- Left Content -->
-            <div class="w-full md:w-1/2 pr-0 md:pr-8">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
-                    Mentored by the Mind That Moved a TEDx Audience
-                </h1>
-                
-                <div class="space-y-4 text-lg">
-                    <p class="font-medium text-gray-800">Real-world projects.</p>
-                    <p class="font-medium text-gray-800">Practical learning.</p>
-                    <p class="font-medium text-gray-800">Guaranteed internships</p>
-                </div>
-            </div>
-            
-            <!-- Right Content - Images -->
-            <div class="w-full md:w-1/2 flex flex-col md:flex-row items-end justify-end gap-4 relative mt-8 md:mt-0">
-                <!-- Main Image - Speaker on stage -->
-                <div class="rounded-2xl overflow-hidden shadow-xl w-full md:w-3/4 border-2 border-gray-200">
-                    <img src="./images/tedx1.png" alt="TEDx Speaker on stage" class="w-full h-auto object-cover" />
-                </div>
-                
-                <!-- Smaller Image - Portrait -->
-                <div class="absolute -top-4 right-0 md:right-0 md:top-20 rounded-xl overflow-hidden shadow-lg border-2 border-gray-200 w-1/2 md:w-2/5">
-                    <div class="bg-white">
-                        <img src="/api/placeholder/300/320" alt="TEDx Speaker portrait with red and white background" class="w-full h-auto object-cover" />
-                    </div>
-                </div>
-            </div>
-        </div>
+      <section class="max-w-7xl mx-auto lg:px-16 xl:px-20 py-28 relative">
+  <!-- Heading -->
+  <h2 class="text-4xl md:text-5xl font-bold text-center md:text-left mb-12 text-[#45565F]">
+    Mentored by the Mind That <br>
+    Moved a TEDx Audience
+  </h2>
+
+  <div class="flex flex-col lg:flex-row md:flex-wrap items-start md:items-center gap-10 relative">
+    <!-- Left Points -->
+    <div class="w-full md:w-[35%] space-y-4 md:text-4xl text-2xl text-center md:text-start font-normal text-[#45565F]">
+      <p>Real-world projects.</p>
+      <p>Practical learning.</p>
+      <p>Guaranteed internships</p>
     </div>
+
+    <!-- Center Image Section -->
+    <div class="w-full md:w-[50%] flex flex-col items-center md:items-start relative">
+      <!-- Main TEDx Image -->
+      <div class="px-5">
+        <img src="./images/tedx1.png" alt="Center TEDx Speaker"
+          class="rounded-xl border-2 border-orange-400 shadow-xl xl:w-[400px] xl:h-[300px] w-[320px] object-cover z-0">
+      </div>
+
+      <!-- Floating Image - Adjusted for all screen sizes -->
+      <img src="./images/tedx2.png" alt="Floating TEDx Speaker"
+        class="rounded-xl xl:w-[356px] xl:h-[400px] lg:w-[300px]  shadow-xl z-10
+               mt-6 lg:mt-0 
+               lg:absolute lg:-top-[200px] lg:left-68 xl:left-80">
+    </div>
+  </div>
+</section>
+
+
+<div class="flex justify-center">
+  <a href="./payment.php" target="_blank">
+    <button class="mt-6 px-6 py-3 bg-[#EB3912] text-white font-bold text-lg rounded-full 
+  hover:bg-red-600 transition">
+    ENROLL NOW!
+  </button>
+  </a>
+</div>
+
+<div class="flex justify-center m-4 md:m-20">
+  <img src="./images/coursebackground.png" alt="coursebackground" class="md:w-5/6 w-full  max-w-screen-md md:max-w-none">
+</div>
+      
+      
+      
+      
+      
+      
+      
 
       <div class="flex justify-center px-5">
         <div

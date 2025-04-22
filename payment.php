@@ -395,7 +395,7 @@
       function validateUserInfo() {
         const requiredFields = [
           'firstName', 'lastName', 'email', 'phone',
-          'city', 'address', 'mode'
+          'city', 'mode'
         ];
 
         let isValid = true;
