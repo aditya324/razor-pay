@@ -209,22 +209,31 @@
         <!-- New Dropdown for mode selection -->
 
 
-        <div class="mt-6">
-        <label for="fees">CourseFee:</label>
-        <span id="fees"></span>
-        <label for="discountedprice">discountedprice:</label>
-        <span id=discountedamount></span>
-        <label for="GSTPrice">GSTPrice:</label>
-        <span id=GSTPrice></span>
-          <label class="block text-gray-700 font-medium">Total Charges:</label>
-          <div class="mt-2 p-4 bg-gray-100 rounded shadow">
-            <span
-              id="courseFee"
-              class="text-3xl font-bold text-blue-600"></span>
-              includes 18% GST
-          </div>
-         
-        </div>
+        <div class="mt-6 space-y-4">
+  <div class="flex justify-between">
+    <label for="fees" class="text-gray-700 font-medium">Course Fee:</label>
+    <span id="fees" class="text-gray-900 font-semibold"></span>
+  </div>
+
+  <div class="flex justify-between">
+    <label for="discountedprice" class="text-gray-700 font-medium">Discounted Price:</label>
+    <span id="discountedamount" class="text-green-600 font-semibold"></span>
+  </div>
+
+  <div class="flex justify-between">
+    <label for="GSTPrice" class="text-gray-700 font-medium">GST (18%):</label>
+    <span id="GSTPrice" class="text-gray-900 font-semibold"></span>
+  </div>
+
+  <div>
+    <label class="block text-gray-700 font-medium mb-2">Total Charges:</label>
+    <div class="p-4 bg-blue-50 rounded shadow text-right">
+      <span id="courseFee" class="text-3xl font-bold text-blue-600"></span>
+      <div class="text-sm text-gray-600 mt-1">Includes 18% GST</div>
+    </div>
+  </div>
+</div>
+
 
 
         
