@@ -1,80 +1,76 @@
 <?php
 header("Content-Type: application/json");
-require 'vendor/autoload.php';
-require 'config.php';
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type, X-API-KEY");
 
-// API key check
-$apiKey = $_SERVER['HTTP_X_API_KEY'] ?? null;
+require 'vendor/autoload.php';
+
+// Load environment variables from .env file
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
+// Simple API key check (customize as needed)
+$headers = getallheaders();
+$apiKey = $headers['X-API-KEY'] 
+    ?? $headers['x-api-key'] 
+    ?? $_SERVER['HTTP_X_API_KEY'] 
+    ?? null;
+
 if ($apiKey !== 'hDRFkvaUct0SONDDFzMjyQHC') {
     http_response_code(401);
-    echo json_encode(["error" => "Unauthorized"]);
+    echo json_encode(["error" => "Unauthorized auth key error"]);
     exit;
 }
 
-$input = json_decode(file_get_contents("php://input"), true);
-$couponCode = $input['couponCode'] ?? null;
-$currentAmount = $input['amount'] ?? null;
+// Database connection
+$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(["error" => "Database connection failed"]);
+    exit;
+}
 
-if (!$couponCode || !$currentAmount) {
+// Retrieve and decode JSON input
+$input = file_get_contents("php://input");
+$data = json_decode($input, true);
+if (json_last_error() !== JSON_ERROR_NONE) {
     http_response_code(400);
-    echo json_encode(["error" => "Missing required fields"]);
+    echo json_encode(["error" => "Invalid JSON input"]);
     exit;
 }
 
-// Start transaction
-$conn->begin_transaction();
-
-try {
-    // Lock coupon row for update
-    $stmt = $conn->prepare("
-        SELECT * FROM coupons 
-        WHERE code = ? 
-        AND is_active = TRUE
-        AND start_date <= NOW() 
-        AND (end_date >= NOW() OR end_date IS NULL)
-        FOR UPDATE
-    ");
-    $stmt->bind_param("s", $couponCode);
-    $stmt->execute();
-    $coupon = $stmt->get_result()->fetch_assoc();
-
-    if (!$coupon) {
-        throw new Exception("Invalid or expired coupon code");
-    }
-
-    // Check usage limits
-    if ($coupon['is_single_use'] && $coupon['current_uses'] >= $coupon['max_uses']) {
-        throw new Exception("This coupon has already been used");
-    }
-
-    // Check minimum order amount
-    if ($coupon['min_order_amount'] && $currentAmount < $coupon['min_order_amount']) {
-        throw new Exception("Order amount too low for this coupon");
-    }
-
-    // Calculate discount
-    if ($coupon['discount_type'] === 'percentage') {
-        $discountAmount = $currentAmount * ($coupon['discount'] / 100);
-        $discountedAmount = $currentAmount - $discountAmount;
-    } else {
-        $discountAmount = min($coupon['discount'], $currentAmount);
-        $discountedAmount = $currentAmount - $discountAmount;
-    }
-
-    $conn->commit();
-
-    echo json_encode([
-        "valid" => true,
-        "discount_amount" => $discountAmount,
-        "discounted_amount" => $discountedAmount,
-        "coupon_code" => $coupon['code'],
-        "message" => "Coupon applied successfully"
-    ]);
-} catch (Exception $e) {
-    $conn->rollback();
-    echo json_encode([
-        "valid" => false,
-        "message" => $e->getMessage()
-    ]);
+// Validate coupon code
+if (!isset($data['couponCode']) || empty($data['couponCode'])) {
+    http_response_code(400);
+    echo json_encode(["error" => "Coupon code is required"]);
+    exit;
 }
-?>
+
+$couponCode = $conn->real_escape_string(trim($data['couponCode']));
+
+// Check if coupon exists and is unused
+$stmt = $conn->prepare("SELECT id, code, discount_amount, is_used FROM coupons WHERE code = ?");
+$stmt->bind_param("s", $couponCode);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    echo json_encode(["success" => false, "message" => "Invalid coupon code"]);
+    exit;
+}
+
+$coupon = $result->fetch_assoc();
+
+if ($coupon['is_used'] == 1) {
+    echo json_encode(["success" => false, "message" => "This coupon has already been used"]);
+    exit;
+}
+
+// At this point, coupon is valid
+echo json_encode([
+    "success" => true, 
+    "message" => "Coupon applied successfully!",
+    "discount_amount" => $coupon['discount_amount'],
+    "coupon_id" => $coupon['id']
+]);

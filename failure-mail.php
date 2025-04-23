@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "Name: {$data['name']}\n" .
             "Email: {$data['email']}\n" .
             "Phone: {$data['phone']}\n" .
-            "Address: {$data['address']}\n" .
+            "State: {$data['address']}\n" .
             "Course: {$data['course']}\n" .
             "Amount: ₹" . number_format($data['amount'] / 100, 2) . "\n" .
             "Mode: {$data['mode']}\n\n" .

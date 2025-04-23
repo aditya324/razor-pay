@@ -23,11 +23,20 @@ $apiKey = $headers['X-API-KEY']
     ?? $_SERVER['HTTP_X_API_KEY'] 
     ?? null;
 
-if ($apiKey !== 'hDRFkvaUct0SONDDFzMjyQHC') {
+if ($apiKey !== 'uk935K7p4j96UCJgHK8kAU4q') {
     http_response_code(401);
     echo json_encode(["error" => "Unauthorized auth key error"]);
     exit;
 }
+
+// Database connection
+$conn = new mysqli($_ENV['DB_HOST'], $_ENV['DB_USER'], $_ENV['DB_PASS'], $_ENV['DB_NAME']);
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(["error" => "Database connection failed", "details" => $conn->connect_error]);
+    exit;
+}
+
 // Retrieve and decode JSON input
 $input = file_get_contents("php://input");
 $data = json_decode($input, true);
@@ -43,6 +52,10 @@ $email = isset($data['email']) ? filter_var($data['email'], FILTER_VALIDATE_EMAI
 $phone = isset($data['phone']) ? preg_replace('/[^0-9+]/', '', $data['phone']) : null;
 $amount = isset($data['amount']) ? (int)$data['amount'] : 0;
 $mode = isset($data['mode']) ? filter_var($data['mode'], FILTER_SANITIZE_STRING) : null;
+
+// Process coupon data if available
+$coupon_id = isset($data['coupon_id']) ? (int)$data['coupon_id'] : null;
+$discount_amount = isset($data['discount_amount']) ? (float)$data['discount_amount'] : 0;
 
 // Enhanced validation checks
 $errors = [];
@@ -68,6 +81,31 @@ if (!empty($errors)) {
     exit;
 }
 
+// Verify coupon if provided
+if ($coupon_id) {
+    $stmt = $conn->prepare("SELECT id, code, discount_amount, is_used FROM coupons WHERE id = ? AND is_used = 0");
+    $stmt->bind_param("i", $coupon_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows === 0) {
+        http_response_code(400);
+        echo json_encode(["error" => "Invalid or already used coupon"]);
+        exit;
+    }
+    
+    $coupon = $result->fetch_assoc();
+    
+    // Mark coupon as used
+    $updateStmt = $conn->prepare("UPDATE coupons SET is_used = 1, used_by = ?, used_at = NOW() WHERE id = ?");
+    $updateStmt->bind_param("si", $email, $coupon_id);
+    $updateStmt->execute();
+    $updateStmt->close();
+    
+    // Log coupon usage
+    error_log("Coupon {$coupon['code']} applied by {$email}. Discount: {$coupon['discount_amount']}");
+}
+
 error_log("Received amount: " . $amount);
 // Optionally log non-sensitive operational data (avoid logging sensitive fields)
 // error_log("Order mode: " . $mode);
@@ -76,7 +114,11 @@ $orderData = [
     "amount" => $amount,
     "currency" => "INR",
     "receipt" => "order_" . uniqid(),
-    "payment_capture" => 1
+    "payment_capture" => 1,
+    "notes" => [
+        "coupon_id" => $coupon_id,
+        "discount_amount" => $discount_amount
+    ]
 ];
 
 $api_url = "https://api.razorpay.com/v1/orders";
