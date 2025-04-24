@@ -156,7 +156,7 @@
             id="mode"
             name="mode"
             class="w-full p-3 mt-1 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="online">Online</option>
+            <option value="online" default>Online</option>
             <option value="offline">Offline</option>
           </select>
         </div>
